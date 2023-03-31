@@ -5,8 +5,24 @@ import 'package:meal_mentor/utils/colors.dart';
 
 import '../utils/image_paths.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+class CartScreen extends StatefulWidget {
+  CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  String dropdownvalue = 'Table';
+
+  // List of items in our dropdown menu
+  var items = [
+    'Table',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +68,59 @@ class CartScreen extends StatelessWidget {
             name: "Burger",
             textTheme: textTheme,
           )
-          
         ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(width: 1.0, color: Colors.grey),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 20),
+                width: (Get.width / 2.5),
+                height: 50,
+                decoration: BoxDecoration(
+                    // color: Colors.greenAccent, //<-- SEE HERE
+                    ),
+                child: DropdownButton(
+                  // Initial Value
+
+                  value: dropdownvalue,
+
+                  // Down Arrow Icon
+                  icon: const Icon(Icons.keyboard_arrow_down),
+
+                  // Array list of items
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  // After selecting the desired option,it will
+                  // change button value to selected value
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                    });
+                  },
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: (Size(Get.width / 2.5, 50))),
+                onPressed: () {},
+                child: const Text("Order"),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

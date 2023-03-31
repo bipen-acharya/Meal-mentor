@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                 image: const DecorationImage(
                     image: AssetImage(ImagesPath.backgroundImage),
                     fit: BoxFit.fill,
-                    opacity: 0.3),
+                    opacity: 0.4),
                 boxShadow: [
                   BoxShadow(
                     offset: const Offset(4, 4),

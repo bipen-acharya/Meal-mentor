@@ -34,7 +34,7 @@ class OrderScreen extends StatelessWidget {
             child: IconButton(
               icon: SvgPicture.asset(IconPath.cart),
               onPressed: () {
-                Get.to(() => const CartScreen());
+                Get.to(() =>  CartScreen());
               },
             ),
           )
