@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:meal_mentor/controller/home_screen_controller.dart';
 import 'package:meal_mentor/utils/http_request.dart';
 
 import 'package:http/http.dart' as http;

@@ -9,11 +9,11 @@ class HomeController extends GetxController {
 
   RxList<ItemCategory> itemCategory = RxList();
 
-  @override
-  void onInit() {
-    getAllCategory();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   getAllCategory();
+  //   super.onInit();
+  // }
 
   getAllCategory() async {
     loading.value = true;

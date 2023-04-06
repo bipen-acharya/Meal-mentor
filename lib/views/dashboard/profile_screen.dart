@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/core_controller.dart';
 import '../../utils/colors.dart';
 
 class ProfileScreen extends StatelessWidget {
-
   static const routeName = '/profile_screen';
-  const ProfileScreen({super.key});
+
+  final coreController = Get.find<CoreController>();
+  ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,25 +61,20 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
-          const ProfileCard(
-            content: 'Bipin Timilsana',
-            iconData: Icons.portable_wifi_off,
+          ProfileCard(
+            content: coreController.currentUser.value?.name ?? "",
+            iconData: Icons.person_2_outlined,
             title: 'Name',
           ),
-          const ProfileCard(
-            content: 'Abc@gmail.com',
+          ProfileCard(
+            content: coreController.currentUser.value?.email ?? "",
             iconData: Icons.mail,
             title: 'Email',
           ),
-          const ProfileCard(
-            content: '9090909090',
+          ProfileCard(
+            content: coreController.currentUser.value?.phone ?? "",
             iconData: Icons.phone,
             title: 'Contact',
-          ),
-          const ProfileCard(
-            content: 'Putali bazar kathmandu',
-            iconData: Icons.location_disabled,
-            title: 'Address',
           ),
           const SizedBox(
             height: 10,
@@ -89,7 +86,9 @@ class ProfileScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              coreController.logOut();
+            },
             child: const Padding(
               padding: EdgeInsets.symmetric(
                 vertical: 11.5,
