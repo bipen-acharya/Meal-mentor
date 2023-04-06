@@ -16,15 +16,15 @@ class DashScreen extends StatelessWidget {
   DashScreen({super.key});
   // final coreController = Get.find<CoreController>();
   final c = Get.put(DashScreenController());
-  final co = Get.put(OrderController());
-  final con = Get.put(ProfileController());
-  final conn = Get.put(HomeController());
+  // final co = Get.put(OrderController());
+  // final con = Get.put(ProfileController());
+  // final conn = Get.put(HomeController());
   // final coreController = Get.put(CoreController());
   @override
   Widget build(BuildContext context) {
     final pages = [
       HomeScreen(),
-       const OrderScreen(),
+      const OrderScreen(),
       const ProfileScreen(),
     ];
     return Scaffold(

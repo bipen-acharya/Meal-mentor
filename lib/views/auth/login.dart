@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             Form(
-              key: keys,
+              key: c.formKey,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -113,14 +113,7 @@ class LoginScreen extends StatelessWidget {
                         Icons.person,
                         size: 20,
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'This field is required';
-                        } else if (!GetUtils.isEmail(value)) {
-                          return 'Invalid email address';
-                        }
-                        return null;
-                      },
+                      validator: Validators.checkEmailField,
                       hint: "Username/Email ",
                       textInputAction: TextInputAction.next,
                       textInputType: TextInputType.emailAddress,
@@ -131,14 +124,7 @@ class LoginScreen extends StatelessWidget {
                     Obx(
                       (() => CustomTextField(
                             controller: c.passwordController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'This field is required';
-                              } else if (value.length < 8) {
-                                return "Password must be at least 8 characters";
-                              }
-                              return null;
-                            },
+                            validator: Validators.checkFieldEmpty,
                             prefixIcon: const Icon(
                               Icons.lock_outline,
                               size: 16,
@@ -162,20 +148,19 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 3,
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text("Forgot Password ?"),
-                      ),
+                    // Align(
+                    //   alignment: Alignment.centerRight,
+                    //   child: TextButton(
+                    //     onPressed: () {},
+                    //     child: const Text("Forgot Password ?"),
+                    //   ),
+                    // ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     CustomElevatedButton(
                       buttonText: "Login",
-                      onTap: () async {
-                        if (keys.currentState!.validate()) {
-                          Get.offAll(() => DashScreen());
-                        }
-                      },
+                      onTap: c.onSubmit,
                       style: theme.textTheme.bodyLarge!.copyWith(
                         fontSize: 20,
                         color: AppColors.textColorAccent,

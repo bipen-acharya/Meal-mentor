@@ -8,8 +8,8 @@ import '../controller/splash_controller.dart';
 class SplashScreen extends StatelessWidget {
   static const routeName = '/splash-screen';
 
-  SplashScreen({super.key});
   final c = Get.find<SplashController>();
+  SplashScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

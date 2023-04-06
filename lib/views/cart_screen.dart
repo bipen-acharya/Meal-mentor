@@ -17,11 +17,11 @@ class _CartScreenState extends State<CartScreen> {
 
   // List of items in our dropdown menu
   var items = [
-    'Table',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
+    'Table 1',
+    'Table 2',
+    'Table 3',
+    'Table 4',
+    'Table 5',
   ];
 
   @override
@@ -82,20 +82,17 @@ class _CartScreenState extends State<CartScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20),
+                margin: const EdgeInsets.only(left: 20),
                 width: (Get.width / 2.5),
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     // color: Colors.greenAccent, //<-- SEE HERE
                     ),
                 child: DropdownButton(
                   // Initial Value
-
                   value: dropdownvalue,
-
                   // Down Arrow Icon
                   icon: const Icon(Icons.keyboard_arrow_down),
-
                   // Array list of items
                   items: items.map((String items) {
                     return DropdownMenuItem(

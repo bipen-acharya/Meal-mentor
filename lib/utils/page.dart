@@ -19,14 +19,6 @@ var commonPages = [
       name: LoginScreen.routeName,
       page: (() => LoginScreen()),
       binding: BindingsBuilder(() => Get.lazyPut(() => LoginController()))),
-];
-
-var userPages = [
-  // GetPage(
-  //     name: HomeScreen.routeName,
-  //     page: (() => HomeScreen()),
-  //     binding: BindingsBuilder(() => Get.lazyPut(() => HomeController()))),
-
   GetPage(
       name: DashScreen.routeName,
       page: (() => DashScreen()),
@@ -38,9 +30,4 @@ var userPages = [
           Get.lazyPut(() => ProfileController());
         },
       )),
-  // GetPage(
-  //     name: SinglePage.routeName,
-  //     page: (() =>  SinglePage()),
-  //     binding:
-  //         BindingsBuilder(() => Get.lazyPut(() => SinglePageController()))),
 ];
