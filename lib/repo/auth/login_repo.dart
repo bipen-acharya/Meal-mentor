@@ -17,11 +17,7 @@ class LoginRepo {
   static Future<void> login({
     required String email,
     required String password,
-    required Function(
-            User user,
-            String token
-            )
-        onSuccess,
+    required Function(User user, String token) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -41,19 +37,9 @@ class LoginRepo {
       log(response.body);
       dynamic data = jsonDecode(response.body);
       if (data["status"] == "success") {
-        // User user = User.fromJson(data["data"]["user"]);
-        // final box = GetStorage();
-        // await box.write(
-        //     StorageKeys.ACCESS_TOKEN, json.encode(data["data"]["token"]));
         String token = json.encode(data["data"]["token"]);
-        // await box.write(StorageKeys.USER, data["data"]["user"]);
-        // Get.find<CoreController>().loadCurrentUser();
-        // print('------token ---------${token.toString()}');
-           User user = User.fromJson(data["data"]["user"]);
-        onSuccess(
-           user,token
-
-        );
+        User user = User.fromJson(data["data"]["user"]);
+        onSuccess(user, token);
       } else {
         onError(data["message"]);
       }

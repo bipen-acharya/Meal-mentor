@@ -26,8 +26,6 @@ class LoginController extends GetxController {
   final bearerToken = ''.obs;
 
   final formKey = GlobalKey<FormState>();
-  // final loading = SimpleFontelicoProgressDialog(
-  //     context: Get.context, barrierDimisable: false);
 
   void onSubmit() async {
     if (formKey.currentState!.validate()) {
@@ -38,9 +36,8 @@ class LoginController extends GetxController {
         onSuccess: (user, token) async {
           loading.hide();
           final box = GetStorage();
-          // await box.write(
-          // StorageKeys.ACCESS_TOKEN, json.encode(token.toJson()));
           await box.write(StorageKeys.USER, json.encode(user.toJson()));
+          await box.write(StorageKeys.ACCESS_TOKEN, token.toString());
           Get.find<CoreController>().loadCurrentUser();
           bearerToken.value = token.toString();
           Get.offAllNamed(DashScreen.routeName);

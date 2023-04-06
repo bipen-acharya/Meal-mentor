@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,20 +8,18 @@ import '../views/auth/login.dart';
 
 class CoreController extends GetxController {
   Rx<User?> currentUser = Rxn<User>();
-  // Rx<AccessToken?> accessToken = Rxn<AccessToken>();
+  Rx<String> accessToken = " ".obs;
   Rx<ThemeMode> themeMode = Rx<ThemeMode>(ThemeMode.system);
 
   @override
   void onInit() async {
-     loadCurrentUser();
-    // getTheme();
+    loadCurrentUser();
     super.onInit();
-    
   }
 
   Future<void> loadCurrentUser() async {
     currentUser.value = StorageHelper.getUser();
-    // accessToken.value = StorageHelper.getToken();
+    accessToken.value = StorageHelper.getToken();
   }
 
   bool isUserLoggedIn() {
@@ -58,7 +53,7 @@ class CoreController extends GetxController {
 
   void logOut() async {
     final box = GetStorage();
-    // await box.write(StorageKeys.ACCESS_TOKEN, null);
+    await box.write(StorageKeys.ACCESS_TOKEN, null);
     await box.write(StorageKeys.USER, null);
     loadCurrentUser();
     Get.offAllNamed(LoginScreen.routeName);

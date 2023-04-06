@@ -8,7 +8,6 @@ import 'package:meal_mentor/utils/image_paths.dart';
 import '../../utils/validators.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
-import '../dashboard/dash_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/login-screen';

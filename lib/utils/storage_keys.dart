@@ -3,37 +3,34 @@
 import 'dart:convert';
 import 'dart:developer';
 
-
 import 'package:get_storage/get_storage.dart';
 
 import '../models/user.dart';
 
 class StorageKeys {
   static const String USER = "user";
-  // static const String ACCESS_TOKEN = "accessToken";
+  static const String ACCESS_TOKEN = "accessToken";
 }
 
 class StorageHelper {
-  // static AccessToken? getToken() {
-  //   log("Fetching token");
-  //   try {
-  //     final box = GetStorage();
-  //     log("${box.read(StorageKeys.ACCESS_TOKEN)}");
-  //     AccessToken token = AccessToken.fromJson(
-  //         jsonDecode(box.read(StorageKeys.ACCESS_TOKEN)) ?? "");
-  //     return token;
-  //   } catch (e, s) {
-  //     log(e.toString());
-  //     log(s.toString());
-  //     return null;
-  //   }
-  // }
+  static getToken() {
+    log("Fetching token");
+    try {
+      final box = GetStorage();
+      log("------------ token --------${box.read(StorageKeys.ACCESS_TOKEN)}");
+      String token = box.read(StorageKeys.ACCESS_TOKEN);
+      return token;
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      return null;
+    }
+  }
 
   static User? getUser() {
     try {
       final box = GetStorage();
       User user = User.fromJson(json.decode(box.read(StorageKeys.USER)));
-
       return user;
     } catch (e, s) {
       log("Failed fetch customer");

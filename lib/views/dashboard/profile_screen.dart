@@ -5,8 +5,8 @@ import '../../controller/core_controller.dart';
 import '../../utils/colors.dart';
 
 class ProfileScreen extends StatelessWidget {
+  
   static const routeName = '/profile_screen';
-
   final coreController = Get.find<CoreController>();
   ProfileScreen({super.key});
 
