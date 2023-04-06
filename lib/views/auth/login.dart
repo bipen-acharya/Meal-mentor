@@ -11,7 +11,7 @@ import '../../widgets/custom_text_field.dart';
 import '../dashboard/dash_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  static const routeName = '/splash-screen';
+  static const routeName = '/login-screen';
   LoginScreen({super.key});
 
   final c = Get.find<LoginController>();

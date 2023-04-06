@@ -9,6 +9,7 @@ import '../../utils/image_paths.dart';
 import '../cart_screen.dart';
 
 class OrderScreen extends StatelessWidget {
+  static const routeName = '/order_screen';
   const OrderScreen({super.key});
 
   @override
@@ -34,7 +35,7 @@ class OrderScreen extends StatelessWidget {
             child: IconButton(
               icon: SvgPicture.asset(IconPath.cart),
               onPressed: () {
-                Get.to(() =>  CartScreen());
+                Get.to(() => CartScreen());
               },
             ),
           )

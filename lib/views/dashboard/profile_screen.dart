@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import '../../utils/colors.dart';
 
 class ProfileScreen extends StatelessWidget {
+
+  static const routeName = '/profile_screen';
   const ProfileScreen({super.key});
 
   @override
