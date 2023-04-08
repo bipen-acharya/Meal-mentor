@@ -25,9 +25,6 @@ class ItemRepo {
         Uri.parse(Api.item),
         headers: headers,
       );
-
-      log(response.body);
-
       dynamic data = json.decode(response.body);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -62,10 +59,7 @@ class ItemRepo {
         headers: headers,
       );
 
-      log(response.body);
-
       dynamic data = json.decode(response.body);
-      print("item by category $data");
       if (response.statusCode >= 200 && response.statusCode < 300) {
         List<MealMentorItem> banners = categoryFromJson(data["data"]);
         onSuccess(banners);

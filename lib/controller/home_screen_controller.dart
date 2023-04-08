@@ -26,15 +26,11 @@ class HomeController extends GetxController {
     loading.value = true;
     await ItemRepo.getCategory(
       onSuccess: (items) {
-        log('--------->>>>>>>>>>>.length ${itemCategory.length}');
         loading.value = false;
         itemCategory.addAll(items);
-        log('--------->>>>>>>>>>>.length ${itemCategory.length}');
         final firstCategory =
             itemCategory.isNotEmpty ? itemCategory[0].id : null;
-        log('--------->>>>>>>>>>>.first category index $firstCategory');
         selectedIndex.value = firstCategory!.toInt();
-        log('--------->>>>>>>>>>>.selected index ${selectedIndex.value}');
         getAllItemByCategory(selectedIndex.value);
       },
       onError: ((message) {
@@ -46,14 +42,12 @@ class HomeController extends GetxController {
 
   getAllItemByCategory(int id) async {
     loading1.value = true;
-    print("item by category");
     itmeByCategory.clear();
     await ItemRepo.getItemByCategory(
       id: id,
       onSuccess: (items) {
         loading1.value = false;
         itmeByCategory.addAll(items);
-        log('--------->>>>>>>>>>item by category>.length ${itmeByCategory.length}');
       },
       onError: ((message) {
         loading1.value = false;
