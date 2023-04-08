@@ -311,8 +311,7 @@ class AllItemCard extends StatelessWidget {
                   ),
                   height: 87,
                 ),
-              )
-              ),
+              )),
           const SizedBox(
             height: 5,
           ),
@@ -352,9 +351,19 @@ class AllItemCard extends StatelessWidget {
                   ],
                 ),
               ),
+            
               InkWell(
                 onTap: () {
-                  c.cartItem.add(items);
+                  // Check if item is already present in cart list
+                  final index =
+                      c.cartItem.indexWhere((item) => item.id == items.id);
+                  if (index != -1) {
+                    // Update quantity of existing item
+                    c.cartItem[index].itemCount++;
+                  } else {
+                    // Add new item to cart list
+                    c.cartItem.add(items);
+                  }
                 },
                 child: Container(
                   margin: const EdgeInsets.only(right: 10),
@@ -362,9 +371,7 @@ class AllItemCard extends StatelessWidget {
                   width: 35,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade400,
-                    borderRadius: BorderRadius.circular(
-                      10,
-                    ),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Center(
                     child: Icon(
@@ -373,7 +380,7 @@ class AllItemCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           )
         ],
