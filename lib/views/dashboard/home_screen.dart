@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:meal_mentor/models/meal_mentor_category.dart';
+import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/utils/colors.dart';
 
 import '../../controller/home_screen_controller.dart';
@@ -163,26 +165,36 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SizedBox(
                         // height: Get.height / 1,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 23),
-                          child: GridView.builder(
-                            physics:
-                                ScrollPhysics(), // to disable GridView's scrolling
-                            shrinkWrap: true,
-                            itemCount: c.itmeByCategory.length,
-                            // physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 169,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 20.0,
-                              mainAxisSpacing: 20.0,
-                            ),
-                            itemBuilder: (BuildContext context, int index) {
-                              return const AllItemCard();
-                            },
-                          ),
-                        ),
+                        child: (c.loading1.value)
+                            ? const Center(child: CircularProgressIndicator())
+                            : ((c.itmeByCategory.isNotEmpty)
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 23),
+                                    child: GridView.builder(
+                                      physics:
+                                          const ScrollPhysics(), // to disable GridView's scrolling
+                                      shrinkWrap: true,
+                                      itemCount: c.itmeByCategory.length,
+                                      // physics: const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisExtent: 169,
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 20.0,
+                                        mainAxisSpacing: 20.0,
+                                      ),
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        MealMentorItem mmItem =
+                                            c.itmeByCategory[index];
+                                        return AllItemCard(
+                                          items: mmItem,
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : const Text("No Items in this Category")),
                       ),
                     ],
                   ),
@@ -246,122 +258,18 @@ class TopMenu extends StatelessWidget {
   }
 }
 
-class BottomCard extends StatelessWidget {
-  const BottomCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 23, bottom: 15),
-      height: 160,
-      width: Get.width / 2,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(9),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(4, 4),
-            blurRadius: 9,
-            color: const Color(0xFF494949).withOpacity(0.1),
-          ),
-        ],
-      ),
-      child: Column(
-        // mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(9)),
-              width: double.infinity,
-              // color: Colors.amber,
-              height: 110,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-                child: Image.network(
-                  "https://images.news18.com/ibnlive/uploads/2022/05/tea-traditions.jpg",
-                  fit: BoxFit.fill,
-                ),
-              )
-              // Image.asset(
-              //   VehiclesImages.carSample1,
-              //   fit: BoxFit.fill,
-              // ),
-              ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 14),
-                child: Column(
-                  children: const [
-                    Text(
-                      "Burger",
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Rs 500",
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  height: 35,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade400,
-                    borderRadius: BorderRadius.circular(
-                      10,
-                    ),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
 class AllItemCard extends StatelessWidget {
   const AllItemCard({
     Key? key,
+    required this.items,
   }) : super(key: key);
+
+  final MealMentorItem items;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 0),
       height: 160,
       width: Get.width / 2.4,
       decoration: BoxDecoration(
@@ -388,9 +296,17 @@ class AllItemCard extends StatelessWidget {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
-                child: Image.network(
-                  "https://images.news18.com/ibnlive/uploads/2022/05/tea-traditions.jpg",
+                child: CachedNetworkImage(
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
                   fit: BoxFit.fill,
+                  imageUrl: items.photo ?? "",
+                  errorWidget: (context, url, error) => Image.asset(
+                    'assets/images/logo.png',
+                    height: 87,
+                    fit: BoxFit.contain,
+                  ),
+                  height: 87,
                 ),
               )
               // Image.asset(
@@ -405,26 +321,31 @@ class AllItemCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 14),
+                padding: const EdgeInsets.only(left: 4),
                 child: Column(
-                  children: const [
-                    Text(
-                      "Burger",
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: Get.width / 5,
+                      child: Text(
+                        items.name ?? "",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        softWrap: false,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      "Rs 500",
+                      items.price ?? "",
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),

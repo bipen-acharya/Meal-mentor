@@ -5,24 +5,8 @@ import 'package:meal_mentor/utils/colors.dart';
 
 import '../utils/image_paths.dart';
 
-class CartScreen extends StatefulWidget {
-  CartScreen({super.key});
-
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  String dropdownvalue = 'Table';
-
-  // List of items in our dropdown menu
-  var items = [
-    'Table 1',
-    'Table 2',
-    'Table 3',
-    'Table 4',
-    'Table 5',
-  ];
+class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,34 +65,34 @@ class _CartScreenState extends State<CartScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: const EdgeInsets.only(left: 20),
-                width: (Get.width / 2.5),
-                height: 50,
-                decoration: const BoxDecoration(
-                    // color: Colors.greenAccent, //<-- SEE HERE
-                    ),
-                child: DropdownButton(
-                  // Initial Value
-                  value: dropdownvalue,
-                  // Down Arrow Icon
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  // Array list of items
-                  items: items.map((String items) {
-                    return DropdownMenuItem(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                  // After selecting the desired option,it will
-                  // change button value to selected value
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownvalue = newValue!;
-                    });
-                  },
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(left: 20),
+              //   width: (Get.width / 2.5),
+              //   height: 50,
+              //   decoration: const BoxDecoration(
+              //       // color: Colors.greenAccent, //<-- SEE HERE
+              //       ),
+              //   child: DropdownButton(
+              //     // Initial Value
+              //     value: dropdownvalue,
+              //     // Down Arrow Icon
+              //     icon: const Icon(Icons.keyboard_arrow_down),
+              //     // Array list of items
+              //     items: items.map((String items) {
+              //       return DropdownMenuItem(
+              //         value: items,
+              //         child: Text(items),
+              //       );
+              //     }).toList(),
+              //     // After selecting the desired option,it will
+              //     // change button value to selected value
+              //     onChanged: (String? newValue) {
+              //       setState(() {
+              //         dropdownvalue = newValue!;
+              //       });
+              //     },
+              //   ),
+              // ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     minimumSize: (Size(Get.width / 2.5, 50))),
