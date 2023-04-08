@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:meal_mentor/utils/http_request.dart';
+import '../../utils/http_request.dart';
 
-import '../../controller/core_controller.dart';
 import '../../models/user.dart';
 
 import 'package:http/http.dart' as http;
 
 import '../../utils/apis.dart';
-import '../../utils/storage_keys.dart';
 
 class LoginRepo {
   static Future<void> login({

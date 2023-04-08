@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:meal_mentor/models/item_category.dart';
+import 'package:meal_mentor/models/meal_mentor_category.dart';
 import 'package:meal_mentor/utils/colors.dart';
 
 import '../../controller/home_screen_controller.dart';
@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                               //     width: 23,
                               //   );
                               // }
-                              ItemCategory items = c.itemCategory[index];
+                              MealMentorCategory items = c.itemCategory[index];
 
                               final selected =
                                   c.selectedIndex.value == items.id;
@@ -94,8 +94,10 @@ class HomeScreen extends StatelessWidget {
                                 onTap: () {
                                   c.selectedIndex.value = items.id!;
                                   c.itemCategory.refresh();
+
                                   print(
                                       '----->>>>>>>>>>>>${c.selectedIndex.value}');
+                                  c.getAllItemByCategory(c.selectedIndex.value);
                                 },
                                 child: Container(
                                   height: 50,
@@ -167,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                             physics:
                                 ScrollPhysics(), // to disable GridView's scrolling
                             shrinkWrap: true,
-                            itemCount: 17,
+                            itemCount: c.itmeByCategory.length,
                             // physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(

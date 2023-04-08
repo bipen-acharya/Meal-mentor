@@ -4,13 +4,14 @@ import 'dart:developer';
 import 'package:meal_mentor/utils/http_request.dart';
 
 import 'package:http/http.dart' as http;
-import '../models/item_category.dart';
+import '../models/meal_mentor_category.dart';
+import '../models/meal_mentor_item.dart';
 import '../utils/apis.dart';
 import '../utils/storage_keys.dart';
 
 class ItemRepo {
   static Future<void> getCategory({
-    required Function(List<ItemCategory> category) onSuccess,
+    required Function(List<MealMentorCategory> category) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -30,8 +31,9 @@ class ItemRepo {
       dynamic data = json.decode(response.body);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        List<ItemCategory> banners = itemCategoryFromJson(data["data"]);
-        onSuccess(banners);
+        List<MealMentorCategory> categories =
+            itemCategoryFromJson(data["data"]);
+        onSuccess(categories);
       } else {
         onError(data['message']);
       }
@@ -44,7 +46,7 @@ class ItemRepo {
 
   static Future<void> getItemByCategory({
     required int id,
-    required Function(List<ItemCategory> banners) onSuccess,
+    required Function(List<MealMentorItem> banners) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -63,9 +65,9 @@ class ItemRepo {
       log(response.body);
 
       dynamic data = json.decode(response.body);
-
+      print("item by category $data");
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        List<ItemCategory> banners = itemCategoryFromJson(data["data"]);
+        List<MealMentorItem> banners = categoryFromJson(data["data"]);
         onSuccess(banners);
       } else {
         onError(data['message']);

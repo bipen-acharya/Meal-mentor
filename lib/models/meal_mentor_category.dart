@@ -1,18 +1,19 @@
-List<ItemCategory> itemCategoryFromJson(List<dynamic> itemCategoryJson) =>
-    List<ItemCategory>.from(itemCategoryJson
-        .map((itemCategoryJson) => ItemCategory.fromJson(itemCategoryJson)));
 
-class ItemCategory {
+List<MealMentorCategory> itemCategoryFromJson(List<dynamic> itemCategoryJson) =>
+    List<MealMentorCategory>.from(itemCategoryJson.map(
+        (itemCategoryJson) => MealMentorCategory.fromJson(itemCategoryJson)));
+
+class MealMentorCategory {
   int? id;
   String? name;
   String? restaurantId;
   String? createdAt;
   String? updatedAt;
 
-  ItemCategory(
+  MealMentorCategory(
       {this.id, this.name, this.restaurantId, this.createdAt, this.updatedAt});
 
-  ItemCategory.fromJson(Map<String, dynamic> json) {
+  MealMentorCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     restaurantId = json['restaurant_id'];
