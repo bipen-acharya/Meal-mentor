@@ -42,135 +42,151 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body:
-          // Obx(
-          //   () => (c.loading.value)
-          //       ? const Center(child: CircularProgressIndicator())
-          //       :
+      body: Obx(
+        () => (c.loading.value)
+            ? const Center(child: CircularProgressIndicator())
+            : SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 23),
+                        child: Text(
+                          "Category",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Obx(
+                        () => SizedBox(
+                          height: 51,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: c.itemCategory.length,
+                            itemBuilder: (context, index) {
+                              final colors = [
+                                const Color(0xffFBF5EB),
+                                const Color(0xFFF4F8FC),
+                                const Color(0xffFDEEF4),
+                                const Color(0xffF7F7F5),
+                              ];
+                              final colorIndex = index % colors.length;
+                              // if (index == 0) {
+                              //   return const SizedBox(
+                              //     width: 23,
+                              //   );
+                              // }
+                              ItemCategory items = c.itemCategory[index];
 
-          SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 23),
-                child: Text(
-                  "Category",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
+                              final selected =
+                                  c.selectedIndex.value == items.id;
+                              return InkWell(
+                                onTap: () {
+                                  c.selectedIndex.value = items.id!;
+                                  c.itemCategory.refresh();
+                                  print(
+                                      '----->>>>>>>>>>>>${c.selectedIndex.value}');
+                                },
+                                child: Container(
+                                  height: 50,
+                                  margin:
+                                      const EdgeInsets.only(left: 2, right: 2),
+                                  decoration: BoxDecoration(
+                                    border: selected
+                                        ? Border.all(
+                                            color: Colors.blue, width: 1)
+                                        : null,
+                                    color: colors[colorIndex],
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(50)),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 9),
+                                  child: Row(
+                                    children: [
+                                      Image.network(
+                                        'https://freepngimg.com/thumb/food/4-2-food-png.png',
+                                        fit: BoxFit.fill,
+                                        height: 46,
+                                        width: 31,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        items.name ?? "",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 13,
+                                          // color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 23),
+                        child: Text(
+                          "Items",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      SizedBox(
+                        // height: Get.height / 1,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 23),
+                          child: GridView.builder(
+                            physics:
+                                ScrollPhysics(), // to disable GridView's scrolling
+                            shrinkWrap: true,
+                            itemCount: 17,
+                            // physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisExtent: 169,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 20.0,
+                              mainAxisSpacing: 20.0,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              return const AllItemCard();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              // SizedBox(
-              //   height: 51,
-              //   child: ListView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     shrinkWrap: true,
-              //     itemCount: c.itemCategory.length,
-              //     itemBuilder: (context, index) {
-              //       final colors = [
-              //         const Color(0xffFBF5EB),
-              //         const Color(0xFFF4F8FC),
-              //         const Color(0xffFDEEF4),
-              //         const Color(0xffF7F7F5),
-              //       ];
-              //       final colorIndex = index % colors.length;
-              //       // if (index == 0) {
-              //       //   return const SizedBox(
-              //       //     width: 23,
-              //       //   );
-              //       // }
-              //       ItemCategory items = c.itemCategory[index];
-              //       return Container(
-              //         height: 50,
-              //         margin: const EdgeInsets.only(left: 2, right: 2),
-              //         decoration: BoxDecoration(
-              //           color: colors[colorIndex],
-              //           shape: BoxShape.rectangle,
-              //           borderRadius:
-              //               const BorderRadius.all(Radius.circular(50)),
-              //         ),
-              //         padding: const EdgeInsets.symmetric(
-              //             horizontal: 10, vertical: 9),
-              //         child: Row(
-              //           children: [
-              //             Image.network(
-              //               'https://freepngimg.com/thumb/food/4-2-food-png.png',
-              //               fit: BoxFit.fill,
-              //               height: 46,
-              //               width: 31,
-              //             ),
-              //             const SizedBox(
-              //               width: 5,
-              //             ),
-              //             Text(
-              //               items.name ?? "",
-              //               style: TextStyle(
-              //                 fontWeight: FontWeight.w400,
-              //                 fontSize: 13,
-              //                 // color: AppColors.primaryColor,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 23),
-                child: Text(
-                  "All Items",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              SizedBox(
-                // height: Get.height / 1,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 23),
-                  child: GridView.builder(
-                    physics: ScrollPhysics(), // to disable GridView's scrolling
-                    shrinkWrap: true,
-                    itemCount: 17,
-                    // physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 169,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 20.0,
-                      mainAxisSpacing: 20.0,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return const AllItemCard();
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
-      // ),
     );
   }
 }
