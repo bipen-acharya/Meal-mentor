@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:meal_mentor/controller/cart_controller.dart';
 import 'package:meal_mentor/controller/home_screen_controller.dart';
+import 'package:meal_mentor/views/cart_screen.dart';
 
 import '../controller/auth/login_controller.dart';
 import '../controller/dash_screen_controller.dart';
@@ -30,4 +32,9 @@ var commonPages = [
           Get.lazyPut(() => ProfileController());
         },
       )),
+
+        GetPage(
+      name: CartScreen.routeName,
+      page: (() => CartScreen()),
+      binding: BindingsBuilder(() => Get.lazyPut(() => CartController()))),
 ];

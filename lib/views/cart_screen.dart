@@ -1,13 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:meal_mentor/controller/cart_controller.dart';
+import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/utils/colors.dart';
 
 import '../utils/image_paths.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  static const routeName = '/cart-screen';
+  CartScreen({super.key});
 
+  final c = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -46,13 +52,16 @@ class CartScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          CategoryCard(
-            name: "Burger",
-            textTheme: textTheme,
-          )
-        ],
+      body: SizedBox(
+        child: ListView.builder(
+            itemCount: c.cartItem.length,
+            itemBuilder: (context, index) {
+              MealMentorItem mealMentorItem = c.cartItem[index];
+              return CategoryCard(
+                textTheme: textTheme,
+                mmItems: mealMentorItem,
+              );
+            }),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -65,34 +74,6 @@ class CartScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Container(
-              //   margin: const EdgeInsets.only(left: 20),
-              //   width: (Get.width / 2.5),
-              //   height: 50,
-              //   decoration: const BoxDecoration(
-              //       // color: Colors.greenAccent, //<-- SEE HERE
-              //       ),
-              //   child: DropdownButton(
-              //     // Initial Value
-              //     value: dropdownvalue,
-              //     // Down Arrow Icon
-              //     icon: const Icon(Icons.keyboard_arrow_down),
-              //     // Array list of items
-              //     items: items.map((String items) {
-              //       return DropdownMenuItem(
-              //         value: items,
-              //         child: Text(items),
-              //       );
-              //     }).toList(),
-              //     // After selecting the desired option,it will
-              //     // change button value to selected value
-              //     onChanged: (String? newValue) {
-              //       setState(() {
-              //         dropdownvalue = newValue!;
-              //       });
-              //     },
-              //   ),
-              // ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     minimumSize: (Size(Get.width / 2.5, 50))),
@@ -108,14 +89,16 @@ class CartScreen extends StatelessWidget {
 }
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({
+  CategoryCard({
     super.key,
     required this.textTheme,
-    required this.name,
+    required this.mmItems,
   });
 
   final TextTheme textTheme;
-  final String name;
+
+  final MealMentorItem mmItems;
+  final c = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -156,10 +139,17 @@ class CategoryCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    style: textTheme.bodyLarge!.copyWith(
-                      fontSize: 16,
+                  SizedBox(
+                    width: Get.width / 3,
+                    child: Text(
+                      mmItems.name ?? "",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      softWrap: false,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -212,7 +202,7 @@ class CategoryCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Text("1"),
+                  Text(mmItems.itemCount.toString()),
                   InkWell(
                     onTap: () {},
                     child: Container(
@@ -245,7 +235,10 @@ class CategoryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // c.cartItem.remove()
+                  log("----------lenghth of cart ${c.cartItem.length}-------");
+                },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 11.5,

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:meal_mentor/controller/cart_controller.dart';
 import 'package:meal_mentor/models/meal_mentor_category.dart';
 import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/utils/colors.dart';
@@ -259,12 +260,14 @@ class TopMenu extends StatelessWidget {
 }
 
 class AllItemCard extends StatelessWidget {
-  const AllItemCard({
+  AllItemCard({
     Key? key,
     required this.items,
   }) : super(key: key);
 
   final MealMentorItem items;
+
+  final c = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -309,10 +312,6 @@ class AllItemCard extends StatelessWidget {
                   height: 87,
                 ),
               )
-              // Image.asset(
-              //   VehiclesImages.carSample1,
-              //   fit: BoxFit.fill,
-              // ),
               ),
           const SizedBox(
             height: 5,
@@ -354,7 +353,9 @@ class AllItemCard extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  c.cartItem.add(items);
+                },
                 child: Container(
                   margin: const EdgeInsets.only(right: 10),
                   height: 35,
