@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:meal_mentor/controller/auth/login_controller.dart';
+import 'package:meal_mentor/controller/cart_controller.dart';
 import 'package:meal_mentor/controller/core_controller.dart';
 import 'package:meal_mentor/utils/page.dart';
 import 'package:meal_mentor/utils/theme.dart';

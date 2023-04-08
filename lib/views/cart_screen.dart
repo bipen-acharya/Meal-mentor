@@ -52,16 +52,18 @@ class CartScreen extends StatelessWidget {
           )
         ],
       ),
-      body: SizedBox(
-        child: ListView.builder(
-            itemCount: c.cartItem.length,
-            itemBuilder: (context, index) {
-              MealMentorItem mealMentorItem = c.cartItem[index];
-              return CategoryCard(
-                textTheme: textTheme,
-                mmItems: mealMentorItem,
-              );
-            }),
+      body: Obx(
+        () => SizedBox(
+          child: ListView.builder(
+              itemCount: c.cartItem.length,
+              itemBuilder: (context, index) {
+                MealMentorItem mealMentorItem = c.cartItem[index];
+                return CategoryCard(
+                  textTheme: textTheme,
+                  mmItems: mealMentorItem,
+                );
+              }),
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -156,7 +158,7 @@ class CategoryCard extends StatelessWidget {
                     height: 9,
                   ),
                   Text(
-                    '1 x 120.00',
+                    '${mmItems.itemCount} x ${mmItems.price}',
                     style: textTheme.bodyMedium!.copyWith(
                       fontSize: 14,
                       color: AppColors.textColor,
@@ -166,7 +168,8 @@ class CategoryCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    '120.00',
+                    // '${(mmItems.itemCount * mmItems.price).toStringAsFixed(2)}',
+                    "asdasd",
                     style: textTheme.bodyLarge!.copyWith(
                       fontSize: 16,
                       color: AppColors.primaryColor,
@@ -183,7 +186,9 @@ class CategoryCard extends StatelessWidget {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      c.incrementItemQuantity(mmItems);
+                    },
                     child: Container(
                       margin: const EdgeInsets.only(right: 7, left: 7),
                       height: 30,
@@ -204,7 +209,9 @@ class CategoryCard extends StatelessWidget {
                   ),
                   Text(mmItems.itemCount.toString()),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      c.decrementItemQuantity(mmItems);
+                    },
                     child: Container(
                       margin: const EdgeInsets.only(right: 7, left: 7),
                       height: 30,
@@ -217,7 +224,7 @@ class CategoryCard extends StatelessWidget {
                       ),
                       child: const Center(
                         child: Icon(
-                          Icons.add,
+                          Icons.remove,
                           color: Colors.white,
                         ),
                       ),
@@ -236,7 +243,7 @@ class CategoryCard extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // c.cartItem.remove()
+                  c.removeItem(mmItems);
                   log("----------lenghth of cart ${c.cartItem.length}-------");
                 },
                 child: Padding(
