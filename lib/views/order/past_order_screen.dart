@@ -52,7 +52,7 @@ class PastOrderScreen extends StatelessWidget {
                           return ExpandablePanel(
                             header: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(pastOrder.table!.name ?? ""),
                                 Text(pastOrder.totalAmount.toString()),

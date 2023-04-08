@@ -7,6 +7,7 @@ import 'package:meal_mentor/controller/cart_controller.dart';
 import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/utils/colors.dart';
 
+import '../models/meal_mentor_table.dart';
 import '../utils/image_paths.dart';
 
 class CartScreen extends StatelessWidget {
@@ -19,74 +20,102 @@ class CartScreen extends StatelessWidget {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.extraWhiteLight,
-        elevation: 5,
-        leading: InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        shadowColor: AppColors.shadowColor,
-        title: const Image(
-          image: AssetImage(
-            ImagesPath.logo,
-          ),
-          height: 40,
-          width: 50,
-        ),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 15,
-            ),
-            child: SvgPicture.asset(IconPath.cart),
-          )
-        ],
-      ),
-      body: Obx(
-        () => SizedBox(
-          child: ListView.builder(
-              itemCount: c.cartItem.length,
-              itemBuilder: (context, index) {
-                MealMentorItem mealMentorItem = c.cartItem[index];
-                return CategoryCard(
-                  textTheme: textTheme,
-                  mmItems: mealMentorItem,
-                );
-              }),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          border: Border(
-            top: BorderSide(width: 1.0, color: Colors.grey),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: (Size(Get.width / 2.5, 50))),
-                onPressed: () {},
-                child: const Text("Order"),
+        appBar: AppBar(
+          backgroundColor: AppColors.extraWhiteLight,
+          elevation: 5,
+          leading: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
               ),
-            ],
+            ),
+          ),
+          shadowColor: AppColors.shadowColor,
+          title: const Image(
+            image: AssetImage(
+              ImagesPath.logo,
+            ),
+            height: 40,
+            width: 50,
+          ),
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 15,
+              ),
+              child: SvgPicture.asset(IconPath.cart),
+            )
+          ],
+        ),
+        body: Obx(
+          () => SizedBox(
+            child: ListView.builder(
+                itemCount: c.cartItem.length,
+                itemBuilder: (context, index) {
+                  MealMentorItem mealMentorItem = c.cartItem[index];
+                  return CategoryCard(
+                    textTheme: textTheme,
+                    mmItems: mealMentorItem,
+                  );
+                }),
           ),
         ),
-      ),
-    );
+        bottomNavigationBar: SizedBox(
+          height: 80,
+          child: Obx(() {
+            if (c.allTableList.isEmpty) {
+              return const SizedBox();
+            }
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // First button
+
+                // Second button
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: DropdownButtonFormField<MealMentorTable>(
+                    decoration: const InputDecoration(
+                      // labelText: 'Select a table',
+                      border: OutlineInputBorder(),
+                    ),
+                    value: c.allTableList.first,
+                    items: c.allTableList
+                        .map((table) => DropdownMenuItem(
+                              value: table,
+                              child: Text(table.name!),
+                            ))
+                        .toList(),
+                    onChanged: (selectedTable) {
+                      // do something with the selected table
+                    },
+                  ),
+                ),
+                // Send Order button
+                SizedBox(
+                  height: 63,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Send the selected table ID
+                      // int selectedTableId = c.allTableList.value.indexOf(
+                      //     c.allTableList.value.firstWhere(
+                      //         (table) => table == c.allTableList.value));
+                      // print("Selected table ID: $selectedTableId");
+                    },
+                    child: Text("Send Order"),
+                  ),
+                ),
+              ],
+            );
+          }),
+        ));
   }
 }
 
