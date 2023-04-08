@@ -35,28 +35,52 @@ class PastOrderScreen extends StatelessWidget {
       //   ),
       // ),
 
-      body: ListView.builder(
-          itemCount: c.pastOrders.length,
-          itemBuilder: (context, index) {
-            PastOrder pastOrder = c.pastOrders[index];
-            return ExpandablePanel(
-              header: ListTile(
-                title: Text(pastOrder.table!.name ?? ""),
+      body: Obx(
+        () => (c.loading.value)
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: Get.height - 275,
+                    child: ListView.builder(
+                        itemCount: c.pastOrderList.length,
+                        itemBuilder: (context, index) {
+                          PastOrder pastOrder = c.pastOrderList[index];
+                          return ExpandablePanel(
+                            header: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(pastOrder.table!.name ?? ""),
+                                Text(pastOrder.totalAmount.toString()),
+                              ],
+                            ),
+                            expanded: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: pastOrder.orderableItems!.length,
+                              itemBuilder: (context, index) {
+                                PastOrderOrderableItems orderItem =
+                                    pastOrder.orderableItems![index];
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(orderItem.itemName!.name ?? ""),
+                                    Text(orderItem.price ?? ""),
+                                  ],
+                                );
+                              },
+                            ),
+                            collapsed: Container(),
+                          );
+                        }),
+                  ),
+                ],
               ),
-              expanded: ListView.builder(
-                shrinkWrap: true,
-                itemCount: pastOrder.orderableItems!.length,
-                itemBuilder: (context, index) {
-                  PastOrderOrderableItems orderItem =
-                      pastOrder.orderableItems![index];
-                  return ListTile(
-                    leading: Text(orderItem.price ?? ""),
-                  );
-                },
-              ),
-              collapsed: Container(),
-            );
-          }),
+      ),
     );
   }
 }

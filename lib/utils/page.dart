@@ -32,8 +32,7 @@ var commonPages = [
           Get.lazyPut(() => ProfileController());
         },
       )),
-
-        GetPage(
+  GetPage(
       name: CartScreen.routeName,
       page: (() => CartScreen()),
       binding: BindingsBuilder(() => Get.lazyPut(() => CartController()))),

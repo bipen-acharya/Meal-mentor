@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
       theme: basicTheme(),
       initialBinding: BindingsBuilder(() {
         Get.put(CoreController());
+        Get.put(CartController());
       }),
       getPages: commonPages,
     );

@@ -18,15 +18,16 @@ class OrderController extends GetxController {
 
   RxBool pastDetails = false.obs;
 
-  RxList<PastOrder> pastOrders = <PastOrder>[].obs;
+  RxList<PastOrder> pastOrderList = <PastOrder>[].obs;
+  RxList<PastOrder> activeOrderList = <PastOrder>[].obs;
 
   getAllPastorder() async {
     loading.value = true;
     await PastOrderRepo.getPastOrder(
-      onSuccess: (orders) {
+      onSuccess: (activeOrder, pastOrder) {
         loading.value = false;
-        pastOrders.addAll(orders);
-        log('--------->>>>>>>>>>>.length ${pastOrders[0].orderableItems![0].itemName!.name}');
+        activeOrderList.addAll(activeOrder);
+        pastOrderList.addAll(pastOrder);
       },
       onError: ((message) {
         loading.value = false;

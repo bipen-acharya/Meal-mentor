@@ -10,7 +10,7 @@ import '../utils/storage_keys.dart';
 
 class PastOrderRepo {
   static Future<void> getPastOrder({
-    required Function(List<PastOrder> pastOrders) onSuccess,
+    required Function(List<PastOrder> activeOrders,List<PastOrder> pastOrders,) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -28,10 +28,16 @@ class PastOrderRepo {
       dynamic data = json.decode(response.body);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         log("past order");
+
+         List<PastOrder> activeOrders =
+            pastOrderFromJson(data["activeOrders"]["data"]);
+
         List<PastOrder> pastOrders =
             pastOrderFromJson(data["pastOrders"]["data"]);
 
-        onSuccess(pastOrders);
+       
+
+        onSuccess(activeOrders, pastOrders);
       } else {
         onError(data['message']);
       }
