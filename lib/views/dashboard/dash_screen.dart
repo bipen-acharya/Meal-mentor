@@ -1,12 +1,9 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meal_mentor/controller/order_controller.dart';
 import 'package:meal_mentor/views/dashboard/profile_screen.dart';
 import '../../../utils/colors.dart';
 import '../../controller/dash_screen_controller.dart';
-import '../../controller/home_screen_controller.dart';
-import '../../controller/profile_controller.dart';
 import 'home_screen.dart';
 import '../order/order_screen.dart';
 
@@ -14,12 +11,7 @@ class DashScreen extends StatelessWidget {
   static const routeName = '/dash-screen';
 
   DashScreen({super.key});
-  // final coreController = Get.find<CoreController>();
   final c = Get.put(DashScreenController());
-  // final co = Get.put(OrderController());
-  // final con = Get.put(ProfileController());
-  // final conn = Get.put(HomeController());
-  // final coreController = Get.put(CoreController());
   @override
   Widget build(BuildContext context) {
     final pages = [
