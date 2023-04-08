@@ -71,6 +71,14 @@ class RunningOrder extends StatelessWidget {
                                   children: [
                                     Text(orderItem.itemName!.name ?? ""),
                                     Text(orderItem.price ?? ""),
+                                    IconButton(
+                                      icon: Icon(Icons.remove),
+                                      onPressed: () {
+                                        // Do something when the remove button is pressed
+                                        print(
+                                            "Table ID: ${activeOrder.table!.id}, OrderItem ID: ${orderItem.id}");
+                                      },
+                                    ),
                                   ],
                                 );
                               },
