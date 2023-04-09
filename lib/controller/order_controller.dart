@@ -10,7 +10,7 @@ class OrderController extends GetxController {
     getAllPastorder();
     super.onInit();
   }
-  
+
   RxBool loading = RxBool(false);
   RxBool showDetails = false.obs;
 
@@ -34,4 +34,22 @@ class OrderController extends GetxController {
     );
   }
 
+  removeRemainingOrder(int tableId, int itemId) async {
+    loading.value = true;
+    await MealMentorOrderRepo.removeRemaimingOrderItem(
+      tableId: tableId,
+      itemId: itemId,
+      onSuccess: () {
+        loading.value = false;
+        pastOrderList.clear();
+        activeOrderList.clear();
+        getAllPastorder();
+        CustomSnackBar.error(title: "Order", message: "Item Removed sucefully");
+      },
+      onError: (message) {
+        loading.value = false;
+        CustomSnackBar.error(title: "PastOrder", message: message);
+      },
+    );
+  }
 }

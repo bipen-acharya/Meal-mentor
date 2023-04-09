@@ -49,8 +49,7 @@ class RunningOrder extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 PastOrderOrderableItems orderItem =
                                     activeOrder.orderableItems![index];
-                                return 
-                                ListTile(
+                                return ListTile(
                                   title: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -98,8 +97,13 @@ class RunningOrder extends StatelessWidget {
                                           ),
                                         ),
                                         onPressed: () {
+                                          int? tableId = activeOrder.table!.id;
+                                          int? itemId = orderItem.id;
+
                                           print(
-                                              "Table ID: ${activeOrder.table!.id}, OrderItem ID: ${orderItem.id}");
+                                              "Table ID: $tableId, OrderItem ID: $itemId");
+                                          c.removeRemainingOrder(
+                                              tableId!, itemId!);
                                         },
                                         child: const Icon(
                                           Icons.remove,
@@ -108,7 +112,7 @@ class RunningOrder extends StatelessWidget {
                                     ],
                                   ),
                                 );
-                                },
+                              },
                             ),
                             collapsed: Container(),
                           );

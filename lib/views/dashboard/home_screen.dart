@@ -382,28 +382,6 @@ class AllItemCard extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // InkWell(
-              //   onTap: () {
-              //     // Check if item is already present in cart list
-
-              //   },
-              //   child: Container(
-              //     margin: const EdgeInsets.only(right: 10),
-              //     height: 35,
-              //     width: 35,
-              //     decoration: BoxDecoration(
-              //       color: Colors.grey.shade400,
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //     child: const Center(
-              //       child: Icon(
-              //         Icons.add,
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.secondaryColor,

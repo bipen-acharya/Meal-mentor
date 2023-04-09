@@ -55,29 +55,66 @@ class MealMentorOrderRepo {
     required Function() onSuccess,
     required Function(String message) onError,
   }) async {
-    // try {
-    var token = StorageHelper.getToken();
-    var headers = {
-      "Accept": "application/json",
-      "Authorization": token.toString()
-    };
-    var body = json.encode(items);
+    try {
+      var token = StorageHelper.getToken();
+      var headers = {
+        "Accept": "application/json",
+        "Authorization": token.toString()
+      };
+      var body = json.encode(items);
 
-    http.Response response =
-        await http.post(Uri.parse(Api.postOrder), headers: headers, body: body);
+      http.Response response = await http.post(Uri.parse(Api.postOrder),
+          headers: headers, body: body);
 
-    dynamic data = json.decode(response.body);
-    print(data);
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      log("past order");
-      onSuccess();
-    } else {
-      onError(data['message']);
+      dynamic data = json.decode(response.body);
+      print(data);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        log("past order");
+        onSuccess();
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      onError("Sorry! something went wrong");
     }
-    // } catch (e, s) {
-    //   log(e.toString());
-    //   log(s.toString());
-    //   onError("Sorry! something went wrong");
-    // }
+  }
+
+  static Future<void> removeRemaimingOrderItem({
+    required int tableId,
+    required int itemId,
+    required Function() onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      var token = StorageHelper.getToken();
+      var headers = {
+        "Accept": "application/json",
+        "Authorization": token.toString()
+      };
+      var body = {
+        "item_id": itemId.toString(),
+      };
+
+      var url = Uri.parse('${Api.postOrder}/$tableId/items-remove');
+
+      print(url.toString());
+      http.Response response =
+          await http.post(url, headers: headers, body: body);
+
+      dynamic data = json.decode(response.body);
+      print(data);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        log("past order");
+        onSuccess();
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      onError("Sorry! something went wrong");
+    }
   }
 }
