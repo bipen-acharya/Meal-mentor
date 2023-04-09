@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -15,6 +13,7 @@ class CartScreen extends StatelessWidget {
   CartScreen({super.key});
 
   final c = Get.find<CartController>();
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -75,9 +74,6 @@ class CartScreen extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // First button
-
-                // Second button
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: DropdownButtonFormField<MealMentorTable>(
@@ -93,7 +89,8 @@ class CartScreen extends StatelessWidget {
                             ))
                         .toList(),
                     onChanged: (selectedTable) {
-                      // do something with the selected table
+                          c.setSelectedTable(selectedTable!);
+
                     },
                   ),
                 ),
@@ -103,13 +100,14 @@ class CartScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Send the selected table ID
-                      // int selectedTableId = c.allTableList.value.indexOf(
-                      //     c.allTableList.value.firstWhere(
-                      //         (table) => table == c.allTableList.value));
-                      // print("Selected table ID: $selectedTableId");
+                        final selectedTable = c.allTableList.firstWhere(
+      (table) => table == c.selectedTable.value,
+      orElse: () => c.allTableList.first);
+  final selectedTableId = c.allTableList.indexOf(selectedTable);
+  print('Selected table ID: $selectedTableId, Name: ${selectedTable.name}');
+
                     },
-                    child: Text("Send Order"),
+                    child: const Text("Send Order"),
                   ),
                 ),
               ],
@@ -119,6 +117,28 @@ class CartScreen extends StatelessWidget {
   }
 }
 
+// int total = 0;
+// for (MealMentorItem item in c.cartItem) {
+//   total += item.itemCount * int.parse(item.price!);
+// }
+// print('Total cart value: $total');
+// showDialog<String>(
+//   context: context,
+//   builder: (BuildContext context) => AlertDialog(
+//     title: const Text('AlertDialog Title'),
+//     content: Text('Total:$total '),
+//     actions: <Widget>[
+//       TextButton(
+//         onPressed: () => Navigator.pop(context, 'Cancel'),
+//         child: const Text('Cancel'),
+//       ),
+//       TextButton(
+//         onPressed: () => Navigator.pop(context, 'OK'),
+//         child: const Text('OK'),
+//       ),
+//     ],
+//   ),
+// );
 class CategoryCard extends StatelessWidget {
   CategoryCard({
     super.key,
@@ -130,6 +150,7 @@ class CategoryCard extends StatelessWidget {
 
   final MealMentorItem mmItems;
   final c = Get.find<CartController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -197,8 +218,7 @@ class CategoryCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    // '${(mmItems.itemCount * mmItems.price).toStringAsFixed(2)}',
-                    "asdasd",
+                    '${((mmItems.itemCount) * (int.parse(mmItems.price!)))}',
                     style: textTheme.bodyLarge!.copyWith(
                       fontSize: 16,
                       color: AppColors.primaryColor,
@@ -273,7 +293,8 @@ class CategoryCard extends StatelessWidget {
                 ),
                 onPressed: () {
                   c.removeItem(mmItems);
-                  log("----------lenghth of cart ${c.cartItem.length}-------");
+                  // totalValue += ((mmItems.itemCount) * (int.parse(mmItems.price!)));
+                  // log("----------lenghth of cart ${c.cartItem.length}-------");
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

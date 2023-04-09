@@ -7,13 +7,17 @@ import '../utils/custom_snackbar.dart';
 
 class CartController extends GetxController {
   RxList<MealMentorItem> cartItem = <MealMentorItem>[].obs;
-
+  final selectedTable = MealMentorTable().obs;
   void incrementItemQuantity(MealMentorItem item) {
     final index = cartItem.indexWhere((x) => x.id == item.id);
     if (index != -1) {
       cartItem[index].itemCount++;
     }
     cartItem.refresh();
+  }
+
+  void setSelectedTable(MealMentorTable table) {
+    selectedTable.value = table;
   }
 
   void decrementItemQuantity(MealMentorItem item) {
