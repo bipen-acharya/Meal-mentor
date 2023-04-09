@@ -1,27 +1,39 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:meal_mentor/controller/cart_controller.dart';
 import 'package:meal_mentor/models/meal_mentor_category.dart';
 import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/utils/colors.dart';
+import 'package:meal_mentor/views/cart_screen.dart';
 
 import '../../controller/home_screen_controller.dart';
 import '../../utils/image_paths.dart';
-import '../cart_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home_screen';
   HomeScreen({super.key});
 
   final c = Get.find<HomeController>();
+  final cart = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.extraWhiteLight,
         elevation: 5,
+        leading: InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: const Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
+        ),
         shadowColor: AppColors.shadowColor,
         title: const Image(
           image: AssetImage(
@@ -32,17 +44,44 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 15,
-            ),
-            child: IconButton(
-              icon: SvgPicture.asset(IconPath.cart),
-              onPressed: () {
-                Get.to(() => CartScreen());
-              },
-            ),
-          )
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Get.to(() => CartScreen());
+                },
+                icon: const Icon(
+                  Icons.shopping_cart_rounded,
+                  size: 30,
+                  color: Colors.pink,
+                ),
+              ),
+              if (cart.cartItem.isNotEmpty)
+                Positioned(
+                  top: 4,
+                  right: 6,
+                  child: Container(
+                    height: 22,
+                    width: 22,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.purple,
+                    ),
+                    child: Center(
+                        child: Obx(
+                      () => Text(
+                        '${cart.cartItem.length}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )),
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
       body: Obx(
@@ -351,7 +390,6 @@ class AllItemCard extends StatelessWidget {
                   ],
                 ),
               ),
-            
               InkWell(
                 onTap: () {
                   // Check if item is already present in cart list
@@ -364,6 +402,7 @@ class AllItemCard extends StatelessWidget {
                     // Add new item to cart list
                     c.cartItem.add(items);
                   }
+                  c.cartItem.refresh();
                 },
                 child: Container(
                   margin: const EdgeInsets.only(right: 10),

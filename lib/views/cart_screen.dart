@@ -89,8 +89,7 @@ class CartScreen extends StatelessWidget {
                             ))
                         .toList(),
                     onChanged: (selectedTable) {
-                          c.setSelectedTable(selectedTable!);
-
+                      c.setSelectedTable(selectedTable!);
                     },
                   ),
                 ),
@@ -100,12 +99,43 @@ class CartScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton(
                     onPressed: () {
-                        final selectedTable = c.allTableList.firstWhere(
-      (table) => table == c.selectedTable.value,
-      orElse: () => c.allTableList.first);
-  final selectedTableId = c.allTableList.indexOf(selectedTable);
-  print('Selected table ID: $selectedTableId, Name: ${selectedTable.name}');
+                      final selectedTable = c.allTableList.firstWhere(
+                          (table) => table == c.selectedTable.value,
+                          orElse: () => c.allTableList.first);
+                      final selectedTableId =
+                          c.allTableList.indexOf(selectedTable);
+                      print(
+                          'Selected table ID: $selectedTableId, Name: ${selectedTable.name}');
 
+                      int total = 0;
+                      for (MealMentorItem item in c.cartItem) {
+                        total += item.itemCount * int.parse(item.price!);
+                      }
+                      print('Total cart value: $total');
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('AlertDialog Title'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('Total:$total '),
+                              Text(
+                                  'Tavle id:$selectedTableId name ${selectedTable.name}'),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
                     },
                     child: const Text("Send Order"),
                   ),
@@ -117,28 +147,6 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-// int total = 0;
-// for (MealMentorItem item in c.cartItem) {
-//   total += item.itemCount * int.parse(item.price!);
-// }
-// print('Total cart value: $total');
-// showDialog<String>(
-//   context: context,
-//   builder: (BuildContext context) => AlertDialog(
-//     title: const Text('AlertDialog Title'),
-//     content: Text('Total:$total '),
-//     actions: <Widget>[
-//       TextButton(
-//         onPressed: () => Navigator.pop(context, 'Cancel'),
-//         child: const Text('Cancel'),
-//       ),
-//       TextButton(
-//         onPressed: () => Navigator.pop(context, 'OK'),
-//         child: const Text('OK'),
-//       ),
-//     ],
-//   ),
-// );
 class CategoryCard extends StatelessWidget {
   CategoryCard({
     super.key,
