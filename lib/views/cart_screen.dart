@@ -108,44 +108,41 @@ class CartScreen extends StatelessWidget {
                           'Selected table ID: $selectedTableId, Name: ${selectedTable.name}');
 
                       int total = 0;
+                      List<PostItems> items = []; // create a list of PostItems
+
                       for (MealMentorItem item in c.cartItem) {
                         total += item.itemCount * int.parse(item.price!);
+
+                        // create a PostItems object for each item in the cart
+                        PostItems postItem = PostItems(
+                            id: item.id,
+                            quantity: item.itemCount,
+                            price: int.parse(item.price!));
+                        items.add(
+                            postItem); // add the PostItems object to the list
                       }
-                      print('Total cart value: $total');
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('AlertDialog Title'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Total:$total '),
-                              Text(
-                                  'Tavle id:$selectedTableId name ${selectedTable.name}'),
-                            ],
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
+
+                      // create the final object to be sent to the API
+                      Map<String, dynamic> orderData = {
+                        "table_id": selectedTableId,
+                        "items": items.map((item) => item.toJson()).toList(),
+                        "total": total.toString()
+                      };
+
+                      c.sendPosOrder(orderData);
                     },
                     child: const Text("Send Order"),
                   ),
-                ),
+                )
               ],
             );
           }),
         ));
   }
 }
+
+
+
 
 class CategoryCard extends StatelessWidget {
   CategoryCard({
@@ -321,5 +318,27 @@ class CategoryCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class PostItems {
+  int? id;
+  int? quantity;
+  int? price;
+
+  PostItems({this.id, this.quantity, this.price});
+
+  PostItems.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    quantity = json['quantity'];
+    price = json['price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['quantity'] = quantity;
+    data['price'] = price;
+    return data;
   }
 }

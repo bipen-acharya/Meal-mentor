@@ -3,10 +3,12 @@ import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/models/meal_mentor_table.dart';
 import 'package:meal_mentor/repo/table_repo.dart';
 
+import '../repo/order_repo.dart';
 import '../utils/custom_snackbar.dart';
 
 class CartController extends GetxController {
   RxList<MealMentorItem> cartItem = <MealMentorItem>[].obs;
+
   final selectedTable = MealMentorTable().obs;
   void incrementItemQuantity(MealMentorItem item) {
     final index = cartItem.indexWhere((x) => x.id == item.id);
@@ -45,6 +47,8 @@ class CartController extends GetxController {
     super.onInit();
   }
 
+  // final sendRequest = SimpleFontelicoProgressDialog(
+  //     context: Get.context, barrierDimisable: false);
   RxBool loading = RxBool(false);
 
   RxList<MealMentorTable> allTableList = <MealMentorTable>[].obs;
@@ -61,5 +65,23 @@ class CartController extends GetxController {
         CustomSnackBar.error(title: "PastOrder", message: message);
       }),
     );
+  }
+
+  sendPosOrder(var items) async {
+    // sendRequest.show(message: "Sending Order");
+    print(items);
+    print("send post order");
+    await MealMentorOrderRepo.postOrder(
+        // tableId: int.parse(tableid),
+        // total: total,
+        items: items,
+        onSuccess: () {
+          CustomSnackBar.success(
+              title: "Order", message: "Order placed successfully");
+        },
+        onError: (message) {
+          // sendRequest.hide();
+          CustomSnackBar.error(title: "Order", message: message);
+        });
   }
 }

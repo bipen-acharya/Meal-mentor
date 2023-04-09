@@ -22,18 +22,6 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.extraWhiteLight,
         elevation: 5,
-        leading: InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-          ),
-        ),
         shadowColor: AppColors.shadowColor,
         title: const Image(
           image: AssetImage(
@@ -53,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                 icon: const Icon(
                   Icons.shopping_cart_rounded,
                   size: 30,
-                  color: Colors.pink,
+                  color: Colors.grey,
                 ),
               ),
               if (cart.cartItem.isNotEmpty)
@@ -65,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                     width: 22,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.purple,
+                      color: AppColors.primaryColor,
                     ),
                     child: Center(
                         child: Obx(
@@ -74,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     )),

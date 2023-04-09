@@ -5,4 +5,5 @@ class Api {
   static String itemByCategory = "$baseUrl/items?item_category_id";
   static String pastOrders = "$baseUrl/pos-orders";
   static String tables = "$baseUrl/tables";
+  static String postOrder = "$baseUrl/pos-orders";
 }

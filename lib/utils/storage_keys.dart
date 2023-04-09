@@ -14,10 +14,8 @@ class StorageKeys {
 
 class StorageHelper {
   static getToken() {
-    log("Fetching token");
     try {
       final box = GetStorage();
-      log("------------ token --------${box.read(StorageKeys.ACCESS_TOKEN)}");
       String token = box.read(StorageKeys.ACCESS_TOKEN);
       return token;
     } catch (e, s) {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:meal_mentor/models/past_order.dart';
 import 'package:meal_mentor/repo/order_repo.dart';
@@ -13,6 +11,7 @@ class OrderController extends GetxController {
     super.onInit();
   }
 
+
   RxBool loading = RxBool(false);
   RxBool showDetails = false.obs;
 
@@ -23,7 +22,7 @@ class OrderController extends GetxController {
 
   getAllPastorder() async {
     loading.value = true;
-    await PastOrderRepo.getPastOrder(
+    await MealMentorOrderRepo.getPastOrder(
       onSuccess: (activeOrder, pastOrder) {
         loading.value = false;
         activeOrderList.addAll(activeOrder);
@@ -35,4 +34,5 @@ class OrderController extends GetxController {
       }),
     );
   }
+
 }

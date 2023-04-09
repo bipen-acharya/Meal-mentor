@@ -29,7 +29,7 @@ class LoginController extends GetxController {
 
   void onSubmit() async {
     if (formKey.currentState!.validate()) {
-      loading.show(message: "PLease wiat ..");
+      loading.show(message: "Please wait ..");
       await LoginRepo.login(
         email: emailController.text,
         password: passwordController.text,
