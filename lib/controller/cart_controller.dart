@@ -69,11 +69,7 @@ class CartController extends GetxController {
 
   sendPosOrder(var items) async {
     // sendRequest.show(message: "Sending Order");
-    print(items);
-    print("send post order");
     await MealMentorOrderRepo.postOrder(
-        // tableId: int.parse(tableid),
-        // total: total,
         items: items,
         onSuccess: () {
           CustomSnackBar.success(

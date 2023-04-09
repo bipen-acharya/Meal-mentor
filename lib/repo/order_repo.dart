@@ -61,18 +61,13 @@ class MealMentorOrderRepo {
       "Accept": "application/json",
       "Authorization": token.toString()
     };
-
-    print(items);
-    print(token);
     var body = json.encode(items);
-    
-
-    print(body);
 
     http.Response response =
         await http.post(Uri.parse(Api.postOrder), headers: headers, body: body);
 
     dynamic data = json.decode(response.body);
+    print(data);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       log("past order");
       onSuccess();

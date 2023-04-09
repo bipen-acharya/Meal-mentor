@@ -10,8 +10,7 @@ class OrderController extends GetxController {
     getAllPastorder();
     super.onInit();
   }
-
-
+  
   RxBool loading = RxBool(false);
   RxBool showDetails = false.obs;
 

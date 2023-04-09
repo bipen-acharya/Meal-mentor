@@ -104,22 +104,21 @@ class CartScreen extends StatelessWidget {
                           orElse: () => c.allTableList.first);
                       final selectedTableId =
                           c.allTableList.indexOf(selectedTable);
-                      print(
-                          'Selected table ID: $selectedTableId, Name: ${selectedTable.name}');
-
                       int total = 0;
                       List<PostItems> items = []; // create a list of PostItems
 
                       for (MealMentorItem item in c.cartItem) {
-                        total += item.itemCount * int.parse(item.price!);
+                        if (item != null) {
+                          total += item.itemCount * int.parse(item.price!);
 
-                        // create a PostItems object for each item in the cart
-                        PostItems postItem = PostItems(
-                            id: item.id,
-                            quantity: item.itemCount,
-                            price: int.parse(item.price!));
-                        items.add(
-                            postItem); // add the PostItems object to the list
+                          // create a PostItems object for each item in the cart
+                          PostItems postItem = PostItems(
+                              id: item.id,
+                              quantity: item.itemCount,
+                              price: int.parse(item.price!));
+                          items.add(
+                              postItem); // add the PostItems object to the list
+                        }
                       }
 
                       // create the final object to be sent to the API
@@ -140,9 +139,6 @@ class CartScreen extends StatelessWidget {
         ));
   }
 }
-
-
-
 
 class CategoryCard extends StatelessWidget {
   CategoryCard({

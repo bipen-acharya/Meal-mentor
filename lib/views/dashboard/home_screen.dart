@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
-                            itemCount: c.itemCategory.length,
+                            itemCount: c.itemCategory.length + 1,
                             itemBuilder: (context, index) {
                               final colors = [
                                 const Color(0xffFBF5EB),
@@ -111,12 +111,13 @@ class HomeScreen extends StatelessWidget {
                                 const Color(0xffF7F7F5),
                               ];
                               final colorIndex = index % colors.length;
-                              // if (index == 0) {
-                              //   return const SizedBox(
-                              //     width: 23,
-                              //   );
-                              // }
-                              MealMentorCategory items = c.itemCategory[index];
+                              if (index == 0) {
+                                return const SizedBox(
+                                  width: 23,
+                                );
+                              }
+                              MealMentorCategory items =
+                                  c.itemCategory[index - 1];
 
                               final selected =
                                   c.selectedIndex.value == items.id;
@@ -124,19 +125,17 @@ class HomeScreen extends StatelessWidget {
                                 onTap: () {
                                   c.selectedIndex.value = items.id!;
                                   c.itemCategory.refresh();
-
-                                  print(
-                                      '----->>>>>>>>>>>>${c.selectedIndex.value}');
                                   c.getAllItemByCategory(c.selectedIndex.value);
                                 },
                                 child: Container(
                                   height: 50,
                                   margin:
-                                      const EdgeInsets.only(left: 2, right: 2),
+                                      const EdgeInsets.only(left: 3, right: 3),
                                   decoration: BoxDecoration(
                                     border: selected
                                         ? Border.all(
-                                            color: Colors.blue, width: 1)
+                                            color: AppColors.secondaryColor,
+                                            width: 1)
                                         : null,
                                     color: colors[colorIndex],
                                     shape: BoxShape.rectangle,
@@ -222,7 +221,12 @@ class HomeScreen extends StatelessWidget {
                                       },
                                     ),
                                   )
-                                : const Text("No Items in this Category")),
+                                : const Center(
+                                    child: Text(
+                                      "No Items in this Category",
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                  )),
                       ),
                     ],
                   ),
@@ -378,9 +382,39 @@ class AllItemCard extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  // Check if item is already present in cart list
+
+              // InkWell(
+              //   onTap: () {
+              //     // Check if item is already present in cart list
+
+              //   },
+              //   child: Container(
+              //     margin: const EdgeInsets.only(right: 10),
+              //     height: 35,
+              //     width: 35,
+              //     decoration: BoxDecoration(
+              //       color: Colors.grey.shade400,
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     child: const Center(
+              //       child: Icon(
+              //         Icons.add,
+              //         color: Colors.white,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondaryColor,
+                  padding: const EdgeInsets.only(
+                      left: 3, right: 3, top: 2, bottom: 2),
+                  minimumSize: const Size(13, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                onPressed: () {
                   final index =
                       c.cartItem.indexWhere((item) => item.id == items.id);
                   if (index != -1) {
@@ -392,20 +426,8 @@ class AllItemCard extends StatelessWidget {
                   }
                   c.cartItem.refresh();
                 },
-                child: Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  height: 35,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade400,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
+                child: const Icon(
+                  Icons.add,
                 ),
               ),
             ],
