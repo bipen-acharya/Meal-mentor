@@ -16,8 +16,8 @@ class DashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pages = [
       HomeScreen(),
-      const OrderScreen(),
-       ProfileScreen(),
+      OrderScreen(),
+      ProfileScreen(),
     ];
     return Scaffold(
       // appBar:

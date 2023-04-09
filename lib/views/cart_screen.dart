@@ -44,14 +44,6 @@ class CartScreen extends StatelessWidget {
             width: 50,
           ),
           centerTitle: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 15,
-              ),
-              child: SvgPicture.asset(IconPath.cart),
-            )
-          ],
         ),
         body: Obx(
           () => SizedBox(

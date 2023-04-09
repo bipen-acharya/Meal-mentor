@@ -32,43 +32,43 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Get.to(() => CartScreen());
-                },
-                icon: const Icon(
-                  Icons.shopping_cart_rounded,
-                  size: 30,
-                  color: Colors.grey,
+          Obx(
+            () => Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Get.to(() => CartScreen());
+                  },
+                  icon: const Icon(
+                    Icons.shopping_cart_rounded,
+                    size: 30,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              if (cart.cartItem.isNotEmpty)
-                Positioned(
-                  top: 4,
-                  right: 6,
-                  child: Container(
-                    height: 22,
-                    width: 22,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.primaryColor,
-                    ),
-                    child: Center(
-                        child: Obx(
-                      () => Text(
+                if (cart.cartItem.isNotEmpty)
+                  Positioned(
+                    top: 4,
+                    right: 6,
+                    child: Container(
+                      height: 22,
+                      width: 22,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor,
+                      ),
+                      child: Center(
+                          child: Text(
                         '${cart.cartItem.length}',
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
-                      ),
-                    )),
+                      )),
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -330,8 +330,7 @@ class AllItemCard extends StatelessWidget {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
-                child: 
-                CachedNetworkImage(
+                child: CachedNetworkImage(
                   placeholder: (context, url) =>
                       const Center(child: CircularProgressIndicator()),
                   fit: BoxFit.fill,

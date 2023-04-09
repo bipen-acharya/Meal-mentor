@@ -4,14 +4,16 @@ import 'package:get/get.dart';
 import 'package:meal_mentor/views/order/past_order_screen.dart';
 import 'package:meal_mentor/views/order/running_order_screen.dart';
 
+import '../../controller/cart_controller.dart';
 import '../../utils/colors.dart';
 import '../../utils/image_paths.dart';
 import '../cart_screen.dart';
 
 class OrderScreen extends StatelessWidget {
   static const routeName = '/order_screen';
-  const OrderScreen({super.key});
+  OrderScreen({super.key});
 
+  final cart = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +30,44 @@ class OrderScreen extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 15,
+          Obx(
+            () => Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Get.to(() => CartScreen());
+                  },
+                  icon: const Icon(
+                    Icons.shopping_cart_rounded,
+                    size: 30,
+                    color: Colors.grey,
+                  ),
+                ),
+                if (cart.cartItem.isNotEmpty)
+                  Positioned(
+                    top: 4,
+                    right: 6,
+                    child: Container(
+                      height: 22,
+                      width: 22,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor,
+                      ),
+                      child: Center(
+                          child: Text(
+                        '${cart.cartItem.length}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      )),
+                    ),
+                  ),
+              ],
             ),
-            child: IconButton(
-              icon: SvgPicture.asset(IconPath.cart),
-              onPressed: () {
-                Get.to(() => CartScreen());
-              },
-            ),
-          )
+          ),
         ],
       ),
       body: DefaultTabController(
