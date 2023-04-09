@@ -330,7 +330,8 @@ class AllItemCard extends StatelessWidget {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
-                child: CachedNetworkImage(
+                child: 
+                CachedNetworkImage(
                   placeholder: (context, url) =>
                       const Center(child: CircularProgressIndicator()),
                   fit: BoxFit.fill,

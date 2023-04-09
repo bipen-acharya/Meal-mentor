@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -68,7 +69,7 @@ class CartScreen extends StatelessWidget {
         bottomNavigationBar: SizedBox(
           height: 80,
           child: Obx(() {
-            if (c.allTableList.isEmpty) {
+            if (c.allTableList.isEmpty || c.cartItem.isEmpty) {
               return const SizedBox();
             }
             return Row(
@@ -180,9 +181,17 @@ class CategoryCard extends StatelessWidget {
                 width: 83,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: const Image(
-                    image: NetworkImage('https://picsum.photos/300/300'),
+                  child: CachedNetworkImage(
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
                     fit: BoxFit.fill,
+                    imageUrl: mmItems.photo ?? "",
+                    errorWidget: (context, url, error) => Image.asset(
+                      'assets/images/logo.png',
+                      height: 87,
+                      fit: BoxFit.contain,
+                    ),
+                    height: 87,
                   ),
                 ),
               ),

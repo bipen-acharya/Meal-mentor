@@ -13,38 +13,11 @@ class RunningOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: Obx(
-      //   () => Column(
-      //     children: [
-      //       Container(
-      //         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      //         margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-      //         decoration: BoxDecoration(
-      //           color: Colors.white,
-      //           borderRadius: BorderRadius.circular(10),
-      //           boxShadow: [
-      //             BoxShadow(
-      //               color: const Color(0xFF828282).withOpacity(0.2),
-      //               blurRadius: 9,
-      //               offset: const Offset(4, 4),
-      //             )
-      //           ],
-      //         ),
-      //         child:
-
-      //       ),
-      //     ],
-      //   ),
-      // ),
-
       body: Obx(
         () => (c.loading.value)
             ? const Center(child: CircularProgressIndicator())
             : Column(
                 children: [
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
                   Container(
                     margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
                     height: Get.height - 275,
@@ -76,7 +49,8 @@ class RunningOrder extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 PastOrderOrderableItems orderItem =
                                     activeOrder.orderableItems![index];
-                                return ListTile(
+                                return 
+                                ListTile(
                                   title: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -134,24 +108,7 @@ class RunningOrder extends StatelessWidget {
                                     ],
                                   ),
                                 );
-
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Text(
-                                //         'Item: ${orderItem.itemName!.name ?? ""}'),
-                                //     Text('Cost: ${orderItem.price ?? ""}'),
-                                //     IconButton(
-                                //       icon: const Icon(Icons.remove),
-                                //       onPressed: () {
-                                //         // Do something when the remove button is pressed
-                                //
-                                //       },
-                                //     ),
-                                //   ],
-                                // );
-                              },
+                                },
                             ),
                             collapsed: Container(),
                           );
@@ -163,82 +120,3 @@ class RunningOrder extends StatelessWidget {
     );
   }
 }
-
-// class MyWidget extends StatefulWidget {
-//   @override
-//   _MyWidgetState createState() => _MyWidgetState();
-// }
-
-// class _MyWidgetState extends State<MyWidget> {
-//   List<Item> _items = [
-//     Item(name: "Table 1", item: "Item 1", quantity: 3),
-//     Item(name: "Table 2", item: "Item 2", quantity: 2),
-//     Item(name: "Table 3", item: "Item 3", quantity: 5),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: EdgeInsets.all(16),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.grey.withOpacity(0.5),
-//             spreadRadius: 2,
-//             blurRadius: 7,
-//             offset: Offset(0, 3),
-//           ),
-//         ],
-//       ),
-//       child:
-//          ExpansionPanelList(
-//         expansionCallback: (int index, bool isExpanded) {
-//           setState(() {
-//             _items[index].isExpanded = !isExpanded;
-//           });
-//         },
-//         children: _items.map((Item item) {
-//           return ExpansionPanel(
-//             headerBuilder: (BuildContext context, bool isExpanded) {
-//               return Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(
-//                     item.name,
-//                     style: TextStyle(fontSize: 18),
-//                   ),
-//                   Icon(
-//                     isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-//                   ),
-//                 ],
-//               );
-//             },
-//             body: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text("Item: ${item.item}"),
-//                 Text("Quantity: ${item.quantity}"),
-//               ],
-//             ),
-//             isExpanded: item.isExpanded,
-//           );
-//         }).toList(),
-//       ),
-//     );
-//   }
-// }
-
-// class Item {
-//   final String name;
-//   final String item;
-//   final int quantity;
-//   bool isExpanded;
-
-//   Item({
-//     required this.name,
-//     required this.item,
-//     required this.quantity,
-//     this.isExpanded = false,
-//   });
-// }
