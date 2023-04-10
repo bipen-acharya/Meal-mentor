@@ -27,6 +27,7 @@ class HomeController extends GetxController {
     await ItemRepo.getCategory(
       onSuccess: (items) {
         loading.value = false;
+        itemCategory.clear();
         itemCategory.addAll(items);
         final firstCategory =
             itemCategory.isNotEmpty ? itemCategory[0].id : null;

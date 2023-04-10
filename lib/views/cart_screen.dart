@@ -8,6 +8,7 @@ import 'package:meal_mentor/views/dashboard/dash_screen.dart';
 import 'package:meal_mentor/widgets/custom_button.dart';
 
 import '../models/meal_mentor_table.dart';
+import '../utils/custom_snackbar.dart';
 import '../utils/image_paths.dart';
 
 class CartScreen extends StatelessWidget {
@@ -85,69 +86,87 @@ class CartScreen extends StatelessWidget {
                     buttonText: "Add Item"),
               );
             }
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: DropdownButtonFormField<MealMentorTable>(
-                    decoration: const InputDecoration(
-                      // labelText: 'Select a table',
-                      border: OutlineInputBorder(),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: DropdownButtonFormField<MealMentorTable>(
+                      decoration: const InputDecoration(
+                        // labelText: 'Select a table',
+                        border: OutlineInputBorder(),
+                      ),
+                      value: c.allTableList.first,
+                      items: c.allTableList
+                          .map((table) => DropdownMenuItem(
+                                value: table,
+                                child: Text(table.name!),
+                              ))
+                          .toList(),
+                      onChanged: (selectedTable) {
+                        c.setSelectedTable(selectedTable!);
+                      },
                     ),
-                    value: c.allTableList.first,
-                    items: c.allTableList
-                        .map((table) => DropdownMenuItem(
-                              value: table,
-                              child: Text(table.name!),
-                            ))
-                        .toList(),
-                    onChanged: (selectedTable) {
-                      c.setSelectedTable(selectedTable!);
-                    },
                   ),
-                ),
-                // Send Order button
-                SizedBox(
-                  height: 63,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      final selectedTable = c.allTableList.firstWhere(
-                          (table) => table == c.selectedTable.value,
-                          orElse: () => c.allTableList.first);
-                      final selectedTableId =
-                          c.allTableList.indexOf(selectedTable);
-                      int total = 0;
-                      List<PostItems> items = []; // create a list of PostItems
+                  // Send Order button
+                  SizedBox(
+                    height: 63,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // final selectedTable = c.allTableList.firstWhere(
+                        //     (table) => table == c.selectedTable.value,
+                        //     orElse: () => c.allTableList.first);
 
-                      for (MealMentorItem item in c.cartItem) {
-                        if (item != null) {
-                          total += item.itemCount * int.parse(item.price!);
+                        // final selectedTableId =
+                        //     c.allTableList.indexOf(selectedTable.id);
+                        int total = 0;
+                        List<PostItems> items =
+                            []; // create a list of PostItems
 
-                          // create a PostItems object for each item in the cart
-                          PostItems postItem = PostItems(
-                              id: item.id,
-                              quantity: item.itemCount,
-                              price: int.parse(item.price!));
-                          items.add(
-                              postItem); // add the PostItems object to the list
+                        for (MealMentorItem item in c.cartItem) {
+                          if (item != null) {
+                            total += item.itemCount * int.parse(item.price!);
+
+                            // create a PostItems object for each item in the cart
+                            PostItems postItem = PostItems(
+                                // id: item.id,
+                                // quantity: item.itemCount,
+                                // price: int.parse(item.price!)
+                                id: 1,
+                                quantity: 1,
+                                price: 551);
+                            items.add(
+                                postItem); // add the PostItems object to the list
+                          }
                         }
-                      }
 
-                      // create the final object to be sent to the API
-                      Map<String, dynamic> orderData = {
-                        "table_id": selectedTableId,
-                        "items": items.map((item) => item.toJson()).toList(),
-                        "total": total.toString()
-                      };
-
-                      c.sendPosOrder(orderData);
-                    },
-                    child: const Text("Send Order"),
-                  ),
-                )
-              ],
+                        // create the final object to be sent to the API
+                        Map<String, dynamic> orderData = {
+                          "table_id": 1,
+                          "items": items.toList(),
+                          "total": 223
+                        };
+                        CartController.sendPosOrder(
+                            items: orderData,
+                            onSuccess: () {
+                              CustomSnackBar.success(
+                                  title: "Order",
+                                  message: "Order placed successfully");
+                            },
+                            onError: (message) {
+                              // sendRequest.hide();
+                              CustomSnackBar.error(
+                                  title: "Order", message: message);
+                            });
+                      },
+                      child: const Text("Send Order"),
+                    ),
+                  )
+                ],
+              ),
             );
           }),
         ));
@@ -241,7 +260,7 @@ class CategoryCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    '${((mmItems.itemCount) * (int.parse(mmItems.price!)))}',
+                    'Rs ${((mmItems.itemCount) * (int.parse(mmItems.price!)))}',
                     style: textTheme.bodyLarge!.copyWith(
                       fontSize: 16,
                       color: AppColors.primaryColor,
@@ -316,8 +335,6 @@ class CategoryCard extends StatelessWidget {
                 ),
                 onPressed: () {
                   c.removeItem(mmItems);
-                  // totalValue += ((mmItems.itemCount) * (int.parse(mmItems.price!)));
-                  // log("----------lenghth of cart ${c.cartItem.length}-------");
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

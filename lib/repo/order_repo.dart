@@ -50,37 +50,6 @@ class MealMentorOrderRepo {
     }
   }
 
-  static Future<void> postOrder({
-    required var items,
-    required Function() onSuccess,
-    required Function(String message) onError,
-  }) async {
-    try {
-      var token = StorageHelper.getToken();
-      var headers = {
-        "Accept": "application/json",
-        "Authorization": token.toString()
-      };
-      var body = json.encode(items);
-
-      http.Response response = await http.post(Uri.parse(Api.postOrder),
-          headers: headers, body: body);
-
-      dynamic data = json.decode(response.body);
-      print(data);
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        log("past order");
-        onSuccess();
-      } else {
-        onError(data['message']);
-      }
-    } catch (e, s) {
-      log(e.toString());
-      log(s.toString());
-      onError("Sorry! something went wrong");
-    }
-  }
-
   static Future<void> removeRemaimingOrderItem({
     required int tableId,
     required int itemId,

@@ -73,7 +73,7 @@ class OrderScreen extends StatelessWidget {
       body: DefaultTabController(
         length: 2,
         child: Column(
-          children: <Widget>[
+          children: [
             Container(
               constraints:
                   const BoxConstraints(maxHeight: 150.0, minHeight: 50),
