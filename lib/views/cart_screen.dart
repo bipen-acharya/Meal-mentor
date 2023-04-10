@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +10,6 @@ import 'package:meal_mentor/views/dashboard/dash_screen.dart';
 import 'package:meal_mentor/widgets/custom_button.dart';
 
 import '../models/meal_mentor_table.dart';
-import '../utils/custom_snackbar.dart';
 import '../utils/image_paths.dart';
 
 class CartScreen extends StatelessWidget {
@@ -86,8 +87,8 @@ class CartScreen extends StatelessWidget {
                     buttonText: "Add Item"),
               );
             }
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -116,13 +117,14 @@ class CartScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: ElevatedButton(
                       onPressed: () {
-                        // final selectedTable = c.allTableList.firstWhere(
-                        //     (table) => table == c.selectedTable.value,
-                        //     orElse: () => c.allTableList.first);
+                        final selectedTable = c.allTableList.firstWhere(
+                            (table) => table == c.selectedTable.value,
+                            orElse: () => c.allTableList.first);
 
-                        // final selectedTableId =
-                        //     c.allTableList.indexOf(selectedTable.id);
+                        final selectedTableId = (selectedTable.id);
+
                         int total = 0;
+
                         List<PostItems> items =
                             []; // create a list of PostItems
 
@@ -132,12 +134,9 @@ class CartScreen extends StatelessWidget {
 
                             // create a PostItems object for each item in the cart
                             PostItems postItem = PostItems(
-                                // id: item.id,
-                                // quantity: item.itemCount,
-                                // price: int.parse(item.price!)
-                                id: 1,
-                                quantity: 1,
-                                price: 551);
+                                id: item.id,
+                                quantity: item.itemCount,
+                                price: int.parse(item.price!));
                             items.add(
                                 postItem); // add the PostItems object to the list
                           }
@@ -145,22 +144,11 @@ class CartScreen extends StatelessWidget {
 
                         // create the final object to be sent to the API
                         Map<String, dynamic> orderData = {
-                          "table_id": 1,
-                          "items": items.toList(),
-                          "total": 223
+                          "table_id": selectedTableId,
+                          "items": items.map((item) => item.toJson()).toList(),
+                          "total": total.toString()
                         };
-                        CartController.sendPosOrder(
-                            items: orderData,
-                            onSuccess: () {
-                              CustomSnackBar.success(
-                                  title: "Order",
-                                  message: "Order placed successfully");
-                            },
-                            onError: (message) {
-                              // sendRequest.hide();
-                              CustomSnackBar.error(
-                                  title: "Order", message: message);
-                            });
+                        c.sendPosOrder(orderData);
                       },
                       child: const Text("Send Order"),
                     ),
@@ -260,7 +248,7 @@ class CategoryCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'Rs ${((mmItems.itemCount) * (int.parse(mmItems.price!)))}',
+                    '${((mmItems.itemCount) * (int.parse(mmItems.price!)))}',
                     style: textTheme.bodyLarge!.copyWith(
                       fontSize: 16,
                       color: AppColors.primaryColor,
@@ -335,6 +323,8 @@ class CategoryCard extends StatelessWidget {
                 ),
                 onPressed: () {
                   c.removeItem(mmItems);
+                  // totalValue += ((mmItems.itemCount) * (int.parse(mmItems.price!)));
+                  // log("----------lenghth of cart ${c.cartItem.length}-------");
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

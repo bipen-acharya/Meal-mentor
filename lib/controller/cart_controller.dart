@@ -1,17 +1,12 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
-
-import 'package:http/http.dart' as http;
 import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/models/meal_mentor_table.dart';
 import 'package:meal_mentor/repo/table_repo.dart';
 
 import '../repo/order_repo.dart';
-import '../utils/apis.dart';
 import '../utils/custom_snackbar.dart';
-import '../utils/storage_keys.dart';
 
 class CartController extends GetxController {
   RxList<MealMentorItem> cartItem = <MealMentorItem>[].obs;
@@ -72,52 +67,20 @@ class CartController extends GetxController {
     );
   }
 
-  static Future<void> sendPosOrder({
-    required var items,
-    required Function() onSuccess,
-    required Function(String message) onError,
-  }) async {
-    try {
-      var token = StorageHelper.getToken();
-      var headers = {
-        "Accept": "application/json",
-        "Authorization": token.toString(),
-        "content-type": "application/json"
-      };
-
-      var body = json.encode(items);
-      log("url ------------${Uri.parse(Api.postOrder)}");
-      log('--------json enconded ---------$body');
-      http.Response response = await http.post(Uri.parse(Api.postOrder),
-          headers: headers, body: body);
-
-      dynamic data = json.decode(response.body);
-      print(data);
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        log("past order");
-        onSuccess();
-      } else {
-        onError(data['message']);
-      }
-    } catch (e, s) {
-      log(e.toString());
-      log(s.toString());
-      onError("Sorry! something went wrong");
-    }
+  sendPosOrder(var items) async {
+   
+    // sendRequest.show(message: "Sending Order");
+    log("items: -------items ahru aayo --->>>>>>>>>....$items.s");
+    await MealMentorOrderRepo.postOrder(
+        items: items,
+        onSuccess: () {
+           cartItem.clear();
+          CustomSnackBar.success(
+              title: "Order", message: "Order placed successfully");
+        },
+        onError: (message) {
+          // sendRequest.hide();
+          CustomSnackBar.error(title: "Order", message: message);
+        });
   }
-
-  // sendPosOrder(var items) async {
-  //   // sendRequest.show(message: "Sending Order");
-  //   log("items: -------items ahru aayo --->>>>>>>>>....$items");
-  //   await MealMentorOrderRepo.postOrder(
-  //       items: items,
-  //       onSuccess: () {
-  //         CustomSnackBar.success(
-  //             title: "Order", message: "Order placed successfully");
-  //       },
-  //       onError: (message) {
-  //         // sendRequest.hide();
-  //         CustomSnackBar.error(title: "Order", message: message);
-  //       });
-  // }
 }
