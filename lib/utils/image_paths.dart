@@ -12,4 +12,5 @@ class ImagesPath {
   static const basePath = "assets/images";
   static const logo = "$basePath/logo.png";
   static const backgroundImage = "$basePath/background.png";
+  static const emptyCart = "$basePath/cart.png";
 }

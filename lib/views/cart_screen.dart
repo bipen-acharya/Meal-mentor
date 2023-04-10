@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:meal_mentor/controller/cart_controller.dart';
 import 'package:meal_mentor/models/meal_mentor_item.dart';
 import 'package:meal_mentor/utils/colors.dart';
+import 'package:meal_mentor/views/dashboard/dash_screen.dart';
+import 'package:meal_mentor/widgets/custom_button.dart';
 
 import '../models/meal_mentor_table.dart';
 import '../utils/image_paths.dart';
@@ -45,23 +47,43 @@ class CartScreen extends StatelessWidget {
           centerTitle: true,
         ),
         body: Obx(
-          () => SizedBox(
-            child: ListView.builder(
-                itemCount: c.cartItem.length,
-                itemBuilder: (context, index) {
-                  MealMentorItem mealMentorItem = c.cartItem[index];
-                  return CategoryCard(
-                    textTheme: textTheme,
-                    mmItems: mealMentorItem,
-                  );
-                }),
-          ),
+          () => c.cartItem.isEmpty
+              ? SizedBox(
+                  child: Column(
+                    children: const [
+                      Image(image: AssetImage(ImagesPath.emptyCart)),
+                      Text(
+                        "No items in the cart",
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                )
+              : SizedBox(
+                  child: ListView.builder(
+                      itemCount: c.cartItem.length,
+                      itemBuilder: (context, index) {
+                        MealMentorItem mealMentorItem = c.cartItem[index];
+                        return CategoryCard(
+                          textTheme: textTheme,
+                          mmItems: mealMentorItem,
+                        );
+                      }),
+                ),
         ),
         bottomNavigationBar: SizedBox(
           height: 80,
           child: Obx(() {
             if (c.allTableList.isEmpty || c.cartItem.isEmpty) {
-              return const SizedBox();
+              return Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                child: CustomElevatedButton(
+                    onTap: () {
+                      Get.off(DashScreen());
+                    },
+                    buttonText: "Add Item"),
+              );
             }
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
