@@ -23,6 +23,8 @@ class OrderController extends GetxController {
     loading.value = true;
     await MealMentorOrderRepo.getPastOrder(
       onSuccess: (activeOrder, pastOrder) {
+        pastOrderList.clear();
+        activeOrderList.clear();
         loading.value = false;
         activeOrderList.addAll(activeOrder);
         pastOrderList.addAll(pastOrder);
