@@ -25,8 +25,9 @@ class OrderScreen extends StatelessWidget {
           image: AssetImage(
             ImagesPath.logo,
           ),
+          fit: BoxFit.fill,
           height: 40,
-          width: 50,
+          width: 100,
         ),
         centerTitle: true,
         actions: [

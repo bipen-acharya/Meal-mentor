@@ -6,4 +6,5 @@ class Api {
   static String pastOrders = "$baseUrl/pos-orders";
   static String tables = "$baseUrl/tables";
   static String postOrder = "$baseUrl/pos-orders";
+  
 }

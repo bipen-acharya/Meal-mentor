@@ -27,8 +27,9 @@ class HomeScreen extends StatelessWidget {
           image: AssetImage(
             ImagesPath.logo,
           ),
+          fit: BoxFit.fill,
           height: 40,
-          width: 50,
+          width: 100,
         ),
         centerTitle: true,
         actions: [
@@ -147,14 +148,8 @@ class HomeScreen extends StatelessWidget {
                                     horizontal: 10, vertical: 9),
                                 child: Row(
                                   children: [
-                                    Image.network(
-                                      'https://freepngimg.com/thumb/food/4-2-food-png.png',
-                                      fit: BoxFit.fill,
-                                      height: 46,
-                                      width: 31,
-                                    ),
                                     const SizedBox(
-                                      width: 5,
+                                      width: 10,
                                     ),
                                     Text(
                                       items.name ?? "",
@@ -163,6 +158,9 @@ class HomeScreen extends StatelessWidget {
                                         fontSize: 13,
                                         // color: AppColors.primaryColor,
                                       ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
                                     ),
                                   ],
                                 ),

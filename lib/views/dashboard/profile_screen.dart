@@ -121,7 +121,8 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return 
+    Container(
       height: 70,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
