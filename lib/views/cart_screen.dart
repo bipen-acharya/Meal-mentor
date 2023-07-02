@@ -43,8 +43,8 @@ class CartScreen extends StatelessWidget {
             image: AssetImage(
               ImagesPath.logo,
             ),
-            height: 40,
-            width: 50,
+            height: 80,
+            width: 100,
           ),
           centerTitle: true,
         ),
@@ -205,7 +205,8 @@ class CategoryCard extends StatelessWidget {
                     placeholder: (context, url) =>
                         const Center(child: CircularProgressIndicator()),
                     fit: BoxFit.fill,
-                    imageUrl: mmItems.photo ?? "",
+                    imageUrl:
+                        "https://ychef.files.bbci.co.uk/1600x900/p04tx3m6.webp",
                     errorWidget: (context, url, error) => Image.asset(
                       'assets/images/logo.png',
                       height: 87,
@@ -224,7 +225,7 @@ class CategoryCard extends StatelessWidget {
                   SizedBox(
                     width: Get.width / 3,
                     child: Text(
-                      mmItems.name ?? "",
+                      "Sandwich",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       softWrap: false,
@@ -238,7 +239,7 @@ class CategoryCard extends StatelessWidget {
                     height: 9,
                   ),
                   Text(
-                    '${mmItems.itemCount} x ${mmItems.price}',
+                    '${mmItems.itemCount} x 500',
                     style: textTheme.bodyMedium!.copyWith(
                       fontSize: 14,
                       color: AppColors.textColor,
@@ -248,7 +249,7 @@ class CategoryCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    '${((mmItems.itemCount) * (int.parse(mmItems.price!)))}',
+                    'Rs 500',
                     style: textTheme.bodyLarge!.copyWith(
                       fontSize: 16,
                       color: AppColors.primaryColor,

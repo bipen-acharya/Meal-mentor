@@ -52,7 +52,7 @@ class PastOrderScreen extends StatelessWidget {
                       child: SizedBox(
                         height: Get.height - 275,
                         child: ListView.builder(
-                            itemCount: c.pastOrderList.length,
+                            itemCount: 1,
                             itemBuilder: (context, index) {
                               PastOrder pastOrder = c.pastOrderList[index];
                               return ExpandablePanel(

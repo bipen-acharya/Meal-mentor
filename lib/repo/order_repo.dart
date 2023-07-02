@@ -59,8 +59,8 @@ class MealMentorOrderRepo {
       var token = StorageHelper.getToken();
       var headers = {
         "Accept": "application/json",
-        "Authorization": token.toString(),
-        "Content-Type": "application/json",
+        "Authorization": token.toString()
+        // "Content-Type": "application/json",
       };
 
       var body = json.encode(items);

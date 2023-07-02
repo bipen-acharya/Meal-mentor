@@ -279,7 +279,8 @@ class AllItemCard extends StatelessWidget {
                   placeholder: (context, url) =>
                       const Center(child: CircularProgressIndicator()),
                   fit: BoxFit.fill,
-                  imageUrl: items.photo ?? "",
+                  imageUrl:
+                      "https://ychef.files.bbci.co.uk/1600x900/p04tx3m6.webp",
                   errorWidget: (context, url, error) => Image.asset(
                     'assets/images/logo.png',
                     height: 87,
@@ -301,12 +302,12 @@ class AllItemCard extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: Get.width / 5,
-                      child: Text(
-                        items.name ?? "",
+                      child: const Text(
+                        "Sandwich.",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         softWrap: false,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
@@ -315,11 +316,11 @@ class AllItemCard extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      items.price ?? "",
+                    const Text(
+                      "Rs 500",
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),

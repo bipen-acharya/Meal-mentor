@@ -28,7 +28,7 @@ class RunningOrder extends StatelessWidget {
                       height: Get.height - 275,
                       // color: Colors.blue,
                       child: ListView.builder(
-                          itemCount: c.activeOrderList.length,
+                          itemCount: 1,
                           itemBuilder: (context, index) {
                             PastOrder activeOrder = c.activeOrderList[index];
                             return ExpandablePanel(
@@ -38,12 +38,11 @@ class RunningOrder extends StatelessWidget {
                                 tapBodyToCollapse: true,
                               ),
                               header: ListTile(
-                                title: Text(activeOrder.table!.name ?? "",
+                                title: Text("Table 1",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16)),
-                                trailing: Text(
-                                    activeOrder.totalAmount.toString(),
+                                trailing: Text("Rs 1400",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
@@ -66,7 +65,7 @@ class RunningOrder extends StatelessWidget {
                                                 color:
                                                     AppColors.secondaryColor)),
                                         Text(
-                                          orderItem.itemName!.name ?? "",
+                                          "Sandwitch",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 13,
@@ -86,7 +85,7 @@ class RunningOrder extends StatelessWidget {
                                                     fontSize: 13,
                                                     color: AppColors
                                                         .secondaryColor)),
-                                            Text(orderItem.price ?? "",
+                                            Text("Rs 700",
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 13,

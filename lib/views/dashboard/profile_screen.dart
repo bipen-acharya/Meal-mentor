@@ -5,7 +5,6 @@ import '../../controller/core_controller.dart';
 import '../../utils/colors.dart';
 
 class ProfileScreen extends StatelessWidget {
-  
   static const routeName = '/profile_screen';
   final coreController = Get.find<CoreController>();
   ProfileScreen({super.key});
@@ -62,17 +61,17 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           ProfileCard(
-            content: coreController.currentUser.value?.name ?? "",
+            content: "The Flying Carpet",
             iconData: Icons.person_2_outlined,
             title: 'Name',
           ),
           ProfileCard(
-            content: coreController.currentUser.value?.email ?? "",
+            content: "Washington Ave., Fort Worth, TX 76104",
             iconData: Icons.mail,
-            title: 'Email',
+            title: 'Address',
           ),
           ProfileCard(
-            content: coreController.currentUser.value?.phone ?? "",
+            content: "1 682-250-2427",
             iconData: Icons.phone,
             title: 'Contact',
           ),
@@ -121,8 +120,7 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       height: 70,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
